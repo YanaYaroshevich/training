@@ -61,11 +61,38 @@ public class Logic {
         allComponents = s.getComponents();
     }
 
-    public int minWashes(){
-        int count = 0;
-        for (Juice juice : juices) {
+    public int factorial(int k){
+        int f = 1;
+        for (int i = 2; i <= k; i++)
+            f *= i;
+        return f;
+    }
 
+    public int minWashes(){
+        int count = 1;
+        int k = 0;
+        Juice j1, j2;
+        int min = Integer.MAX_VALUE;
+        Juice [] juicesCpy = new Juice[juices.size()];
+        juices.toArray(juicesCpy);
+        Permutation PU = new Permutation(juicesCpy);
+        while(k <= factorial(juices.size())){
+            for (int i = 0; i < juicesCpy.length - 1; i++) {
+                j1 = juicesCpy[i];
+                j2 = juicesCpy[i+1];
+                for (String comp : j1.getComponents()) {
+                    if (!(j2.getComponents()).contains(comp)){
+                        count++;
+                        break;
+                    }
+                }
+            }
+            k++;
+            if (count < min)
+                min = count;
+            count = 1;
+            juicesCpy = PU.next();
         }
-        return count;
+        return min;
     }
 }
