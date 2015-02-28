@@ -1,0 +1,106 @@
+h1 {
+	color: #7A163C;
+	font-weight: 500;
+	font-size: 50px;
+	margin-top: 0px;
+}
+
+h3{
+	color: #7A163C;
+}
+
+h6{
+	color: #7A163C;
+	font-size: 12px;
+	margin-top: 130px;
+}
+
+textarea{
+	border: 1px solid #7A163C;
+	font-family: "Times New Roman", Times, serif;
+}
+
+/*form{
+	visibility: hidden;
+}*/
+
+#text{
+	width: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+	overflow: scroll;
+	font-size: 15px;
+	color: yellow;
+	background-color: #F06E9C;
+	opacity: 0.5;
+}
+
+#input{
+	margin-left: 300px;
+	margin-top: 5px;
+	width: 20%;
+	height: 13%;
+	position: absolute;
+}
+
+#delete{
+	margin-left: 900px;
+	margin-top: 5px;
+	width: 22%;
+	height: 13%;
+	position: absolute;
+}
+
+#sendBtn{
+	margin-left: 300px;
+	margin-top: 105px;
+	position: absolute;
+}
+
+#editBtn{
+	margin-left: 600px;
+	margin-top: 105px;
+	position: absolute;
+}
+
+#delBtn{
+	margin-left: 900px;
+	margin-top: 105px;
+	position: absolute;
+}
+
+#edit1{
+	margin-left: 600px;
+	margin-top: 5px;
+	width: 20%;
+	height: 6%;
+	position: absolute;
+}
+
+#edit2{
+	margin-left: 600px;
+	margin-top: 55px;
+	width: 20%;
+	height: 6%;
+	position: absolute;
+}
+
+img {
+	margin-top: 5px;
+	border: 1px solid #7A163C;
+	left: 140px;
+	position: absolute;
+}
+
+#greenL{
+	border: 1px solid #FEF8A0;
+	position: absolute;
+}
+
+#redL{
+	border: 1px solid #FEF8A0;
+	margin-left: 50px;
+	position: absolute;
+}
