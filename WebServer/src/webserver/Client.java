@@ -1,66 +1,123 @@
-package webserver;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 
-import java.net.*;
 import java.io.*;
-import java.util.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
-public class Client {
-    String name;
+public class Client implements Runnable {
 
-    public void inputName(){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Input name: ");
-        this.name = sc.next();
+    private List<String> history = new ArrayList<String>();
+    private MessageExchange messageExchange = new MessageExchange();
+    private String host;
+    private Integer port;
+
+    public Client(String host, Integer port) {
+        this.host = host;
+        this.port = port;
     }
 
-    public void sendName(DataOutputStream out) throws IOException{
-        out.writeUTF(this.name);
-        out.flush();
-    }
 
-    public static void main(String[] ar) {
-        Client client = new Client();
-        int serverPort = 6666; // здесь обязательно нужно указать порт к которому привязывается сервер.
-        String address = "127.0.0.1"; // это IP-адрес компьютера, где исполняется наша серверная программа.
-                                      // Здесь указан адрес того самого компьютера где будет исполняться и клиент.
-
-        try {
-            InetAddress ipAddress = InetAddress.getByName(address); // создаем объект который отображает вышеописанный IP-адрес.
-            System.out.println("Any of you heard of a socket with IP address " + address + " and port " + serverPort + "?");
-            Socket socket = new Socket(ipAddress, serverPort); // создаем сокет используя IP-адрес и порт сервера.
-            System.out.println("Yes! I just got hold of the program.");
-
-            // Берем входной и выходной потоки сокета, теперь можем получать и отсылать данные клиентом.
-            InputStream sin = socket.getInputStream();
-            OutputStream sout = socket.getOutputStream();
-
-            // Конвертируем потоки в другой тип, чтоб легче обрабатывать текстовые сообщения.
-            DataInputStream in = new DataInputStream(sin);
-            DataOutputStream out = new DataOutputStream(sout);
-
-            //отправляем серверу имя клиента
-            client.inputName();
-            client.sendName(out);
-
-            // Создаем поток для чтения с клавиатуры.
-            BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
-            String line = null;
-
-            System.out.println("Type in something and press enter. Will send it to the server and tell ya what it thinks.");
-            System.out.println();
-
-            while (true) {
-                line = keyboard.readLine(); // ждем пока пользователь введет что-то и нажмет кнопку Enter.
-                System.out.println("Sending this line to the server...");
-                out.writeUTF(line); // отсылаем введенную строку текста серверу.
-                out.flush(); // заставляем поток закончить передачу данных.
-                line = in.readUTF(); // ждем пока сервер отошлет строку текста.
-                System.out.println("The server was very polite. It sent me this : " + line);
-                System.out.println("Looks like the server is pleased with us. Go ahead and enter more lines.");
-                System.out.println();
-            }
-        } catch (Exception x) {
-            x.printStackTrace();
+    public static void main(String[] args) {
+        if (args.length != 2)
+            System.out.println("Usage: java ChatClient host port");
+        else {
+            System.out.println("Connection to server...");
+            String serverHost = args[0];
+            Integer serverPort = Integer.parseInt(args[1]);
+            Client client = new Client(serverHost, serverPort);
+            new Thread(client).start();
+            System.out.println("Connected to server: " + serverHost + ":" + serverPort);
+            client.listen();
         }
     }
+
+    private HttpURLConnection getHttpURLConnection() throws IOException {
+        URL url = new URL("http://" + host + ":" + port + "/chat?token=" + messageExchange.getToken(history.size()));
+        return (HttpURLConnection) url.openConnection();
+    }
+
+    public List<String> getMessages() {
+        List<String> list = new ArrayList<String>();
+        HttpURLConnection connection = null;
+        try {
+            connection = getHttpURLConnection();
+            connection.connect();
+            String response = messageExchange.inputStreamToString(connection.getInputStream());
+            JSONObject jsonObject = messageExchange.getJSONObject(response);
+            JSONArray jsonArray = (JSONArray) jsonObject.get("messages");
+            for (Object o : jsonArray) {
+                System.out.println(o);
+                list.add(o.toString());
+            }
+        } catch (IOException e) {
+            System.err.println("ERROR: " + e.getMessage());
+        } catch (ParseException e) {
+            System.err.println("ERROR: " + e.getMessage());
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+
+        return list;
+    }
+
+    public void sendMessage(String message) {
+        HttpURLConnection connection = null;
+        try {
+            connection = getHttpURLConnection();
+            connection.setDoOutput(true);
+
+            connection.setRequestMethod("POST");
+
+            DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
+            wr.writeBytes(messageExchange.getClientSendMessageRequest(message));
+            wr.flush();
+            wr.close();
+
+            connection.getInputStream();
+
+        } catch (IOException e) {
+            System.err.println("ERROR: " + e.getMessage());
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
+
+    public void listen() {
+        while (true) {
+            List<String> list = getMessages();
+
+            if (list.size() > 0) {
+                history.addAll(list);
+            }
+
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                System.err.println("ERROR: " + e.getMessage());
+            }
+        }
+    }
+
+    @Override
+    public void run() {
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            String message = scanner.nextLine();
+            sendMessage(message);
+        }
+    }
+
+
+
 }
