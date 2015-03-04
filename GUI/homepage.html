@@ -12,34 +12,35 @@
 	</head>
 
 	<body bgcolor = "#FEF8A0">
-		<!--<img src = "D:\\Code\\UP\\GUI\\1.jpg" alt = "User picture" id = "greenL">
-		<img src = "D:\\Code\\UP\\GUI\\2.jpg" alt = "User picture" id = "redL">-->
-		<img src = "https://raw.githubusercontent.com/YanaYaroshevich/Training/master/GUI/1.jpg" alt = "User picture" id = "greenL">
-		<img src = "https://raw.githubusercontent.com/YanaYaroshevich/Training/master/GUI/2.jpg" alt = "User picture" id = "redL">
+		<img src = "images/greenLamp.jpg" alt = "Server is OK" id = "greenLamp">
+		<img src = "images/redLamp.jpg" alt = "Error" id = "redLamp">
 		<h1 align = "center"> Chatting room </h1>
-		<form class = "form - inline" align = "center">
-  			<input type = "text" class = "input-small" placeholder = "Name" required> </input>
-  			<label class = "checkbox">
-    			<input type = "checkbox"> Remember me &nbsp </input>
-  			</label>
-  			<button type = "submit" class = "btn btn-success"> Send </button>
-		</form>
-		<!--<form class = "form - inline" align = "center">
-			<h3> Hello, user!! </h3>
-  			<input type = "text" class = "input-small" placeholder = "Change name" required> </input>
-  			<button type = "submit" class = "btn btn-success"> Send </button>
-		</form>-->
-		<textarea rows = "20" cols = "100" id = "text" readonly> Yana: Hello, user!!!</textarea>
-		<!--<img src = "D:\\Code\\UP\\GUI\\0.jpg" alt = "User picture" width = "120">-->
-		<img src = "https://raw.githubusercontent.com/YanaYaroshevich/Training/master/GUI/0.jpg" alt = "User picture" width = "120">
-		<textarea rows = "3" id = "input"> Input message </textarea>
+
+		<section class = "inputName">
+			<form id = "form1" class = "form-inline" align = "center">
+	  			<input id = "nameInputText" type = "text" class = "input-small" placeholder = "Name" required> </input>
+	  			<label class = "checkbox">
+	    			<input type = "checkbox"> Remember me &nbsp </input>
+	  			</label>
+	  			<button type = "submit" class = "btn btn-success"> Send </button>
+			</form>
+
+			<!--<form id = "form2" class = "form - inline" align = "center">
+				<h3> Hello, user!! </h3>
+  				<input type = "text" class = "input-small" placeholder = "Change name" required> </input>
+  				<button type = "submit" class = "btn btn-success"> Send </button>
+			</form>-->
+		</section>
+
+		<textarea rows = "20" cols = "100" id = "msgBlock" readonly> Yana: Hello, user!!!</textarea>
+		<img src = "images/coolMan.jpg" alt = "User picture" width = "120"></img>
+		<textarea rows = "3" id = "inputMsg" placeholder = "Input message"></textarea>
 		<button type = "submit" class = "btn btn-success" id = "sendBtn"> Send message </button>
-		<textarea rows = "3" id = "edit1"> Old message </textarea>
-		<textarea rows = "3" id = "edit2"> New message </textarea>
+		<textarea rows = "3" id = "editOld" placeholder = "Old message"></textarea>
+		<textarea rows = "3" id = "editNew" placeholder = "New message"></textarea>
 		<button type = "submit" class = "btn btn-success" id = "editBtn"> Edit message </button>
-		<textarea rows = "3" id = "delete"> Bad message </textarea>
+		<textarea rows = "3" id = "delete" placeholder = "Bad message"></textarea>
 		<button type = "submit" class = "btn btn-success" id = "delBtn"> Delete message </button>
 		<h6 align = "center" > &copy 2015 Yana Yaroshevich</h6>
 	</body>
-
 </html>
