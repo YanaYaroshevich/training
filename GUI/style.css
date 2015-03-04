@@ -13,6 +13,7 @@ h6 {
 	color: #7A163C;
 	font-size: 12px;
 	margin-top: 10.25%;
+	background-color: #EEEEEE;
 }
 
 textarea {
@@ -32,18 +33,23 @@ img {
 	position: absolute;
 }*/
 
-#msgBlock{
-	width: 80%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 0.732%;
-	overflow: scroll;
-	font-size: 15px;
-	color: black;
+.history{
+	margin-top: 1%;
+	margin-right:10%;
+	margin-left: 10%;
+    font-size: 20px;
+    color: black;
 	background-color: #F06E9C;
 	opacity: 0.5;
+	overflow: scroll;
 }
+
+.history .userMessage:hover{
+	background: #f3bd48; /* Цвет фона при наведении */
+    color: #fff; /* Цвет текста при наведении */
+}
+
+
 
 #inputMsg{
 	margin-left: 22%;
@@ -53,45 +59,9 @@ img {
 	position: absolute;
 }
 
-#delete{
-	margin-left: 66%;
-	margin-top: 0.37%;
-	width: 22%;
-	height: 13%;
-	position: absolute;
-}
-
 #sendBtn{
 	margin-left: 22%;
 	margin-top: 7.7%;
-	position: absolute;
-}
-
-#editBtn{
-	margin-left: 44%;
-	margin-top: 7.7%;
-	position: absolute;
-}
-
-#delBtn{
-	margin-left: 66%;
-	margin-top: 7.7%;
-	position: absolute;
-}
-
-#editOld{
-	margin-left: 44%;
-	margin-top: 0.37%;
-	width: 20%;
-	height: 6%;
-	position: absolute;
-}
-
-#editNew{
-	margin-left: 44%;
-	margin-top: 4.02%;
-	width: 20%;
-	height: 6%;
 	position: absolute;
 }
 

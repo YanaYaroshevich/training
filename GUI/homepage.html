@@ -7,11 +7,11 @@
 		
 		<title>Chatting page</title>
 
-		<link href = "css/bootstrap.css" rel = "stylesheet">
+		<link href = "bootstrap/css/bootstrap.css" rel = "stylesheet">
     	<link href = "style.css" rel = "stylesheet">
 	</head>
 
-	<body bgcolor = "#FEF8A0">
+	<body bgcolor >
 		<img src = "images/greenLamp.jpg" alt = "Server is OK" id = "greenLamp">
 		<img src = "images/redLamp.jpg" alt = "Error" id = "redLamp">
 		<h1 align = "center"> Chatting room </h1>
@@ -32,15 +32,25 @@
 			</form>-->
 		</section>
 
-		<textarea rows = "20" cols = "100" id = "msgBlock" readonly> Yana: Hello, user!!!</textarea>
-		<img src = "images/coolMan.jpg" alt = "User picture" width = "120"></img>
+		<div class = "history">
+			<div class = "userMessage"> 
+				<div class = "userName">Yana</div>
+				<div class = "text">HTML - это плохо</div>
+				<button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-wrench" style="color:red;"></span></button>
+				<button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" style="color:red;"></span></button>
+				
+			</div>
+			<div class = "userMessage"> 
+				<div class = "userName">Masha</div>
+				<div class = "text">HTML - это плохо</div>
+				<button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-wrench" style="color:red;"></span></button>
+				<button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" style="color:red;"></span></button>
+			</div>
+		</div>
+
+		<img src = "images/coolMan.jpg" alt = "User picture" width = "120" align = "center"></img>
 		<textarea rows = "3" id = "inputMsg" placeholder = "Input message"></textarea>
 		<button type = "submit" class = "btn btn-success" id = "sendBtn"> Send message </button>
-		<textarea rows = "3" id = "editOld" placeholder = "Old message"></textarea>
-		<textarea rows = "3" id = "editNew" placeholder = "New message"></textarea>
-		<button type = "submit" class = "btn btn-success" id = "editBtn"> Edit message </button>
-		<textarea rows = "3" id = "delete" placeholder = "Bad message"></textarea>
-		<button type = "submit" class = "btn btn-success" id = "delBtn"> Delete message </button>
 		<h6 align = "center" > &copy 2015 Yana Yaroshevich</h6>
 	</body>
 </html>
