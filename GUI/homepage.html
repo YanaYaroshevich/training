@@ -8,10 +8,13 @@
 		<title>Chatting page</title>
 
 		<link href = "bootstrap/css/bootstrap.css" rel = "stylesheet">
-    	<link href = "style.css" rel = "stylesheet">
+		<link href = "style.css" rel = "stylesheet">
+		<script src="js/handlebars.js"></script>
+		<script src="scripts.js"></script>
+  
 	</head>
 
-	<body bgcolor >
+	<body onload = "run();">
 		<img src = "images/greenLamp.jpg" alt = "Server is OK" id = "greenLamp">
 		<img src = "images/redLamp.jpg" alt = "Error" id = "redLamp">
 		<h1 align = "center"> Chatting room </h1>
@@ -25,24 +28,23 @@
 	  			<button type = "submit" class = "btn btn-success"> Send </button>
 			</form>
 
-			<!--<form id = "form2" class = "form - inline" align = "center">
-				<h3> Hello, user!! </h3>
-  				<input type = "text" class = "input-small" placeholder = "Change name" required> </input>
-  				<button type = "submit" class = "btn btn-success"> Send </button>
-			</form>-->
+			<form id = "form2" class = "form-inline" align = "center">
+  				<input id = "nameChangeText" type = "text" class = "input-small" placeholder = "Change name" required> </input>
+  				<button type = "submit" class = "btn btn-info"> Send </button>
+			</form>
 		</section>
 
 		<div class = "history">
 			<div class = "userMessage"> 
 				<div class = "userName">Yana</div>
-				<div class = "text">HTML - это плохо</div>
+				<div class = "text">HTML - это здорово</div>
 				<button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-wrench" style="color:red;"></span></button>
 				<button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" style="color:red;"></span></button>
 				
 			</div>
 			<div class = "userMessage"> 
 				<div class = "userName">Masha</div>
-				<div class = "text">HTML - это плохо</div>
+				<div class = "text">HTML - это замечательно</div>
 				<button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-wrench" style="color:red;"></span></button>
 				<button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" style="color:red;"></span></button>
 			</div>
@@ -50,7 +52,7 @@
 
 		<img src = "images/coolMan.jpg" alt = "User picture" width = "120" align = "center"></img>
 		<textarea rows = "3" id = "inputMsg" placeholder = "Input message"></textarea>
-		<button type = "submit" class = "btn btn-success" id = "sendBtn"> Send message </button>
+		<button type = "submit" class = "btn btn-primary" id = "sendBtn"> Send message </button>
 		<h6 align = "center" > &copy 2015 Yana Yaroshevich</h6>
 	</body>
 </html>

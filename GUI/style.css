@@ -6,6 +6,9 @@ h1 {
 }
 
 h3 {
+	position: absolute;
+	margin-top: 0%;
+	margin-left: 45%;
 	color: #7A163C;
 }
 
@@ -28,14 +31,23 @@ img {
 	position: absolute;
 }
 
-/*#form2{
-	visibility: hidden;
+.form-inline{
 	position: absolute;
-}*/
+	margin-top: 2%;
+}
+
+#form1{
+	margin-left: 37%;
+}
+
+#form2{
+	visibility: hidden;
+	margin-left: 42%;
+}
 
 .history{
-	margin-top: 1%;
-	margin-right:10%;
+	margin-top: 6%;
+	margin-right: 10%;
 	margin-left: 10%;
     font-size: 20px;
     color: black;
@@ -45,11 +57,9 @@ img {
 }
 
 .history .userMessage:hover{
-	background: #f3bd48; /* Цвет фона при наведении */
-    color: #fff; /* Цвет текста при наведении */
+	background: #f3bd48;
+    color: #fff;
 }
-
-
 
 #inputMsg{
 	margin-left: 22%;
@@ -61,7 +71,7 @@ img {
 
 #sendBtn{
 	margin-left: 22%;
-	margin-top: 7.7%;
+	margin-top: 6.5%;
 	position: absolute;
 }
 
