@@ -67,21 +67,32 @@ img {
 	width: 20%;
 	height: 13%;
 	position: absolute;
+	visibility: hidden;
 }
 
 #sendBtn{
 	margin-left: 22%;
 	margin-top: 6.5%;
 	position: absolute;
+	visibility: hidden;
 }
 
 #greenLamp{
 	border: 1px solid #FEF8A0;
 	position: absolute;
+	visibility: hidden;
 }
 
 #redLamp{
 	border: 1px solid #FEF8A0;
-	margin-left: 3.66%;
 	position: absolute;
+	visibility: visible;
+}
+
+#coolMan{
+	visibility: hidden;
+}
+
+.userName{
+	font-weight: bold;
 }

@@ -1,10 +1,9 @@
 var name;
 
 function run(){
+	serverCheck(false);
 	var appContainer = document.getElementsByClassName('inputName')[0];
 	appContainer.addEventListener('click', delegateEvent);
-
-
 }
 
 function delegateEvent(evtObj) {
@@ -51,8 +50,22 @@ function setName(value, evtObj){
 
 	else{
 		items.appendChild(greeting);
+		document.getElementById("sendBtn").style.visibility = "visible";
+		document.getElementById("coolMan").style.visibility = "visible";
+		document.getElementById("inputMsg").style.visibility = "visible";
 	}
 
 	document.getElementById("form1").style.visibility = "hidden";
 	document.getElementById("form2").style.visibility = "visible";
+}
+
+function serverCheck(flag){
+	if (flag){
+		document.getElementById("greenLamp").style.visibility = "visible";
+		document.getElementById("redLamp").style.visibility = "hidden";
+	}
+	else{
+		document.getElementById("greenLamp").style.visibility = "hidden";
+		document.getElementById("redLamp").style.visibility = "visible";
+	}
 }
