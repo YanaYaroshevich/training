@@ -48,6 +48,28 @@ function createGreeting(value){
 	return greeting; 
 }
 
+function createBtn(btnClass){
+	var btn = document.createElement('button');
+	var attr = document.createAttribute('type');
+	attr.value = "button";
+	btn.setAttributeNode(attr);
+
+	attr = document.createAttribute('class');
+	attr.value = "btn btn-default btn-sm";
+	btn.setAttributeNode(attr);
+
+	var sp = document.createElement('span');
+	attr = document.createAttribute("class");
+	attr.value = btnClass;
+	sp.setAttributeNode(attr);
+	attr = document.createAttribute('style');
+	attr.value = "color:red;";
+	sp.setAttributeNode(attr);
+
+	btn.appendChild(sp);
+	return btn;
+}
+
 function createMsg(value){
 	var userMessage = document.createElement('div');
 	var attr = document.createAttribute("class");
@@ -66,42 +88,8 @@ function createMsg(value){
 	text.setAttributeNode(attr);
 	text.innerHTML = value;
 
-	var delBtn = document.createElement('button');
-	attr = document.createAttribute('type');
-	attr.value = "button";
-	delBtn.setAttributeNode(attr);
-	attr = document.createAttribute('class');
-	attr.value = "btn btn-default btn-sm";
-	delBtn.setAttributeNode(attr);
-
-	var gw = document.createElement('span');
-	attr = document.createAttribute("class");
-	attr.value = "glyphicon glyphicon-wrench";
-	gw.setAttributeNode(attr);
-	attr = document.createAttribute('style');
-	attr.value = "color:red;";
-	gw.setAttributeNode(attr);
-
-	delBtn.appendChild(gw);
-
-	var editBtn = document.createElement('button');
-	attr = document.createAttribute('type');
-	attr.value = "button";
-	editBtn.setAttributeNode(attr);
-	attr = document.createAttribute('class');
-	attr.value = "btn btn-default btn-sm";
-	editBtn.setAttributeNode(attr);
-
-	var gt = document.createElement('span');
-	attr = document.createAttribute("class");
-	attr.value = "glyphicon glyphicon-trash";
-	gt.setAttributeNode(attr);
-	attr = document.createAttribute('style');
-	attr.value = "color:red;";
-	gt.setAttributeNode(attr);
-
-	editBtn.appendChild(gt);
-	
+	var delBtn = createBtn("glyphicon glyphicon-wrench");
+	var editBtn = createBtn("glyphicon glyphicon-trash");
 	
 	userMessage.appendChild(userName);
 	userMessage.appendChild(text);
