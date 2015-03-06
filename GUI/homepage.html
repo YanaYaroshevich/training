@@ -9,7 +9,7 @@
 
 		<link href = "bootstrap/css/bootstrap.css" rel = "stylesheet">
 		<link href = "style.css" rel = "stylesheet">
-		<script src="js/handlebars.js"></script>
+		
 		<script src="scripts.js"></script>
   
 	</head>
@@ -21,7 +21,7 @@
 
 		<section class = "inputName">
 			<form id = "form1" class = "form-inline" align = "center">
-	  			<input id = "nameInputText" type = "text" class = "input-small" placeholder = "Name" required> </input>
+	  			<input id = "nameInputText" type = "text" class = "input-small" placeholder = "Name" required></input>
 	  			<label class = "checkbox">
 	    			<input type = "checkbox"> Remember me &nbsp </input>
 	  			</label>
@@ -38,14 +38,21 @@
 			<div class = "userMessage"> 
 				<div class = "userName">Admin</div>
 				<div class = "text">Welcome!</div>
-				<!--<button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-wrench" style="color:red;"></span></button>
-				<button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" style="color:red;"></span></button>-->
+				<button type = "button" class = "btn btn-default btn-sm">
+					<span class = "glyphicon glyphicon-wrench" style = "color:red;"></span>
+				</button>
+				<button type = "button" class="btn btn-default btn-sm">
+					<span class = "glyphicon glyphicon-trash" style="color:red;"></span>
+				</button>
 			</div>
 		</div>
 
-		<img src = "images/coolMan.jpg" alt = "User picture" width = "120" align = "center" id = "coolMan"></img>
-		<textarea rows = "3" id = "inputMsg" placeholder = "Input message"></textarea>
-		<button type = "submit" class = "btn btn-primary" id = "sendBtn"> Send message </button>
+		<div class = "inputMsg">
+			<img src = "images/coolMan.jpg" alt = "User picture" width = "120" align = "center" id = "coolMan"></img>
+			<textarea rows = "3" id = "inputMsgText" placeholder = "Input message"></textarea>
+			<button type = "submit" class = "btn btn-primary" id = "sendBtn"> Send message </button>
+		</div>
+
 		<h6 align = "center" > &copy 2015 Yana Yaroshevich</h6>
 	</body>
 </html>

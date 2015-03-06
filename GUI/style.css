@@ -61,7 +61,7 @@ img {
     color: #fff;
 }
 
-#inputMsg{
+#inputMsgText{
 	margin-left: 22%;
 	margin-top: 0.37%;
 	width: 20%;
@@ -72,7 +72,7 @@ img {
 
 #sendBtn{
 	margin-left: 22%;
-	margin-top: 6.5%;
+	margin-top: 7%;
 	position: absolute;
 	visibility: hidden;
 }
