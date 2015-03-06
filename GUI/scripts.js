@@ -8,6 +8,9 @@ function run(){
 
 	appContainer = document.getElementsByClassName('inputMsg')[0];
 	appContainer.addEventListener('click', delegateEvent);
+
+	appContainer = document.getElementsByClassName('history')[0];
+	appContainer.addEventListener('click', delegateEvent);
 }
 
 function delegateEvent(evtObj) {
@@ -16,6 +19,8 @@ function delegateEvent(evtObj) {
 			onInputNameButtonClick(evtObj);
 		else if (evtObj.target.classList.contains('btn-primary'))
 			onInputMsgButtonClick(evtObj);
+		else if (evtObj.target.classList.contains('btn-default'))
+			onEditMsgButtonClick(evtObj);
 	}
 }
 
@@ -40,6 +45,17 @@ function onInputNameButtonClick(evtObj){
 	setName(nameField.value, evtObj);
 
 	nameField.value = '';
+}
+
+function onEditMsgButtonClick(evtObj){
+	if (evtObj.target.firstElementChild.className == "glyphicon glyphicon-wrench"){
+
+	}
+	else if (evtObj.target.firstElementChild.className == "glyphicon glyphicon-trash"){
+		var items = document.getElementsByClassName('history')[0];
+		items.removeChild(evtObj.target.parentElement);	
+	}
+
 }
 
 function createGreeting(value){
