@@ -2,15 +2,7 @@ var name = "";
 
 function run(){
 	serverCheck(true);
-
-	var appContainer = document.getElementsByClassName('inputName')[0];
-	appContainer.addEventListener('click', delegateEvent);
-
-	appContainer = document.getElementsByClassName('inputMsg')[0];
-	appContainer.addEventListener('click', delegateEvent);
-
-	appContainer = document.getElementsByClassName('history')[0];
-	appContainer.addEventListener('click', delegateEvent);
+	document.addEventListener('click', delegateEvent);
 }
 
 function delegateEvent(evtObj) {
@@ -19,8 +11,9 @@ function delegateEvent(evtObj) {
 			onInputNameButtonClick(evtObj);
 		else if (evtObj.target.classList.contains('btn-primary'))
 			onInputMsgButtonClick(evtObj);
-		else if (evtObj.target.classList.contains('btn-default'))
+		else if (evtObj.target.classList.contains('btn-default') || evtObj.target.classList.contains('glyphicon')){
 			onEditMsgButtonClick(evtObj);
+		}
 	}
 }
 
@@ -48,12 +41,21 @@ function onInputNameButtonClick(evtObj){
 }
 
 function onEditMsgButtonClick(evtObj){
-	if (evtObj.target.firstElementChild.className == "glyphicon glyphicon-wrench"){
-
+	if (evtObj.target.hasChildNodes()){
+		if (evtObj.target.firstElementChild.className == "glyphicon glyphicon-wrench"){
+		}
+		else if (evtObj.target.firstElementChild.className == "glyphicon glyphicon-trash"){
+			var items = document.getElementsByClassName('history')[0];
+			items.removeChild(evtObj.target.parentElement);	
+		}
 	}
-	else if (evtObj.target.firstElementChild.className == "glyphicon glyphicon-trash"){
-		var items = document.getElementsByClassName('history')[0];
-		items.removeChild(evtObj.target.parentElement);	
+	else {
+		if (evtObj.target.className == "glyphicon glyphicon-wrench"){
+		}
+		else if (evtObj.target.className == "glyphicon glyphicon-trash"){
+			var items = document.getElementsByClassName('history')[0];
+			items.removeChild(evtObj.target.parentElement.parentElement);	
+		}
 	}
 
 }
@@ -69,7 +71,7 @@ function createBtn(btnClass){
 	var attr = document.createAttribute('type');
 	attr.value = "button";
 	btn.setAttributeNode(attr);
-
+	
 	attr = document.createAttribute('class');
 	attr.value = "btn btn-default btn-sm";
 	btn.setAttributeNode(attr);
