@@ -1,4 +1,7 @@
 var name = "";
+var editFlag = false;
+var editMsgPos = -1;
+//var editMsg = null;
 
 function run(){
 	serverCheck(true);
@@ -9,8 +12,12 @@ function delegateEvent(evtObj) {
 	if(evtObj.type === 'click'){
 		if (evtObj.target.classList.contains('btn-success') || evtObj.target.classList.contains('btn-info'))
 			onInputNameButtonClick(evtObj);
-		else if (evtObj.target.classList.contains('btn-primary'))
-			onInputMsgButtonClick(evtObj);
+		else if (evtObj.target.classList.contains('btn-primary')){
+			if (editFlag == false)
+				onInputMsgButtonClick(evtObj);
+			else 
+				onSendEditedMsgBtnClick(evtObj);
+		}
 		else if (evtObj.target.classList.contains('btn-default') || evtObj.target.classList.contains('glyphicon')){
 			onEditMsgButtonClick(evtObj);
 		}
@@ -20,6 +27,12 @@ function delegateEvent(evtObj) {
 function onInputMsgButtonClick(evtObj){
 	var textField = document.getElementById('inputMsgText');
 	sendMsg(textField.value, evtObj);
+	textField.value = '';
+}
+
+function onSendEditedMsgBtnClick(evtObj){
+	var textField = document.getElementById('inputMsgText');
+	editMsg(textField.value, evtObj);
 	textField.value = '';
 }
 
@@ -43,6 +56,26 @@ function onInputNameButtonClick(evtObj){
 function onEditMsgButtonClick(evtObj){
 	if (evtObj.target.hasChildNodes()){
 		if (evtObj.target.firstElementChild.className == "glyphicon glyphicon-wrench"){
+			var children = evtObj.target.parentElement.childNodes;
+			var textToChange = '';
+			for (var i = 0; i < children.length; i++){
+				if(children[i].className == "text"){
+					textToChange = children[i].innerHTML;
+					break;
+				}
+			}
+			
+			var field = document.getElementById("inputMsgText");
+			field.value = textToChange;
+
+			editFlag = true;
+			var items = document.getElementsByClassName('history')[0];
+			for (var i = 0; i < items.childNodes.length; i++){
+				if (items.childNodes[i] == evtObj.target.parentElement){
+					editMsgPos = i;
+					break;
+				}
+			}
 		}
 		else if (evtObj.target.firstElementChild.className == "glyphicon glyphicon-trash"){
 			var items = document.getElementsByClassName('history')[0];
@@ -51,13 +84,31 @@ function onEditMsgButtonClick(evtObj){
 	}
 	else {
 		if (evtObj.target.className == "glyphicon glyphicon-wrench"){
+			var children = evtObj.target.parentElement.parentElement.childNodes;
+			var textToChange = '';
+			for (var i = 0; i < children.length; i++){
+				if(children[i].className == "text"){
+					textToChange = children[i].innerHTML;
+					break;
+				}
+			}
+			var field = document.getElementById("inputMsgText");
+			field.value = textToChange;
+
+			editFlag = true;
+			var items = document.getElementsByClassName('history')[0];
+			for (var i = 0; i < items.childNodes.length; i++){
+				if (items.childNodes[i] == evtObj.target.parentElement.parentElement){
+					editMsgPos = i;
+					break;
+				}
+			}	
 		}
 		else if (evtObj.target.className == "glyphicon glyphicon-trash"){
 			var items = document.getElementsByClassName('history')[0];
 			items.removeChild(evtObj.target.parentElement.parentElement);	
 		}
 	}
-
 }
 
 function createGreeting(value){
@@ -149,6 +200,14 @@ function sendMsg(value, evtObj){
 	var items = document.getElementsByClassName('history')[0];
 	var userMessage = createMsg(value);
 	items.appendChild(userMessage);
+}
+
+function editMsg(value, evtObj){
+	alert(editMsgPos);
+	var items = document.getElementsByClassName('history')[0];
+	var userMessage = createMsg(value);
+	items.replaceChild(userMessage, items.childNodes[editMsgPos]);
+	editFlag = false;
 }
 
 function serverCheck(flag){
