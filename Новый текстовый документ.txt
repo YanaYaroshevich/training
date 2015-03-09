@@ -1,0 +1,708 @@
+Microsoft Windows [Version 6.1.7601]
+(c) Корпорация Майкрософт, 2009. Все права защищены.
+
+d:\Code\UP>git init
+Initialized empty Git repository in d:/Code/UP/.git/
+
+d:\Code\UP>git config --global user.email "yaroshevich.yana@gmail.com"
+
+d:\Code\UP>git config --global user.name "YanaY"
+
+d:\Code\UP>git add UP1_Juices\src\up1juices\*.java
+warning: LF will be replaced by CRLF in UP1_Juices/src/up1juices/CodesComparator
+.java.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in UP1_Juices/src/up1juices/Juice.java.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in UP1_Juices/src/up1juices/Logic.java.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in UP1_Juices/src/up1juices/Main.java.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in UP1_Juices/src/up1juices/Sort.java.
+The file will have its original line endings in your working directory.
+
+d:\Code\UP>git status
+On branch master
+
+Initial commit
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+
+        new file:   UP1_Juices/src/up1juices/CodesComparator.java
+        new file:   UP1_Juices/src/up1juices/Juice.java
+        new file:   UP1_Juices/src/up1juices/Logic.java
+        new file:   UP1_Juices/src/up1juices/Main.java
+        new file:   UP1_Juices/src/up1juices/Sort.java
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        LinearSort/
+        UP1_Juices/build.xml
+        UP1_Juices/build/
+        UP1_Juices/juice.in
+        UP1_Juices/juice1.out
+        UP1_Juices/juice2.out
+        UP1_Juices/manifest.mf
+        UP1_Juices/nbproject/
+        WebServer/
+
+
+d:\Code\UP>git commit -m "Juices adding"
+[master (root-commit) 52d5667] Juices adding
+warning: LF will be replaced by CRLF in UP1_Juices/src/up1juices/CodesComparator
+.java.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in UP1_Juices/src/up1juices/Juice.java.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in UP1_Juices/src/up1juices/Logic.java.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in UP1_Juices/src/up1juices/Main.java.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in UP1_Juices/src/up1juices/Sort.java.
+The file will have its original line endings in your working directory.
+ 5 files changed, 146 insertions(+)
+ create mode 100644 UP1_Juices/src/up1juices/CodesComparator.java
+ create mode 100644 UP1_Juices/src/up1juices/Juice.java
+ create mode 100644 UP1_Juices/src/up1juices/Logic.java
+ create mode 100644 UP1_Juices/src/up1juices/Main.java
+ create mode 100644 UP1_Juices/src/up1juices/Sort.java
+
+d:\Code\UP>git add WebServer\src\webserver\*.java
+warning: LF will be replaced by CRLF in WebServer/src/webserver/Client.java.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in WebServer/src/webserver/Server.java.
+The file will have its original line endings in your working directory.
+
+d:\Code\UP>git commit -m "WebServer Adding"
+[master dee4972] WebServer Adding
+warning: LF will be replaced by CRLF in WebServer/src/webserver/Client.java.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in WebServer/src/webserver/Server.java.
+The file will have its original line endings in your working directory.
+ 2 files changed, 129 insertions(+)
+ create mode 100644 WebServer/src/webserver/Client.java
+ create mode 100644 WebServer/src/webserver/Server.java
+
+d:\Code\UP>git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        LinearSort/
+        UP1_Juices/build.xml
+        UP1_Juices/build/
+        UP1_Juices/juice.in
+        UP1_Juices/juice1.out
+        UP1_Juices/juice2.out
+        UP1_Juices/manifest.mf
+        UP1_Juices/nbproject/
+        WebServer/build.xml
+        WebServer/build/
+        WebServer/manifest.mf
+        WebServer/nbproject/
+        WebServer/src/webserver/Client.class
+        WebServer/src/webserver/Server.class
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+d:\Code\UP>git add LinearSort\src\linearsort\*.java
+warning: LF will be replaced by CRLF in LinearSort/src/linearsort/Main.java.
+The file will have its original line endings in your working directory.
+
+d:\Code\UP>git commit -m "LinearSort Adding"
+[master 25d5543] LinearSort Adding
+warning: LF will be replaced by CRLF in LinearSort/src/linearsort/Main.java.
+The file will have its original line endings in your working directory.
+ 1 file changed, 58 insertions(+)
+ create mode 100644 LinearSort/src/linearsort/Main.java
+
+d:\Code\UP>git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        LinearSort/build.xml
+        LinearSort/build/
+        LinearSort/input.in
+        LinearSort/manifest.mf
+        LinearSort/nbproject/
+        LinearSort/output.out
+        UP1_Juices/build.xml
+        UP1_Juices/build/
+        UP1_Juices/juice.in
+        UP1_Juices/juice1.out
+        UP1_Juices/juice2.out
+        UP1_Juices/manifest.mf
+        UP1_Juices/nbproject/
+        WebServer/build.xml
+        WebServer/build/
+        WebServer/manifest.mf
+        WebServer/nbproject/
+        WebServer/src/webserver/Client.class
+        WebServer/src/webserver/Server.class
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+d:\Code\UP>git add *.xml
+
+d:\Code\UP>git commit -m "*.xml Adding"
+[master 781e0c0] *.xml Adding
+ 12 files changed, 2694 insertions(+)
+ create mode 100644 LinearSort/build.xml
+ create mode 100644 LinearSort/nbproject/build-impl.xml
+ create mode 100644 LinearSort/nbproject/private/private.xml
+ create mode 100644 LinearSort/nbproject/project.xml
+ create mode 100644 UP1_Juices/build.xml
+ create mode 100644 UP1_Juices/nbproject/build-impl.xml
+ create mode 100644 UP1_Juices/nbproject/private/private.xml
+ create mode 100644 UP1_Juices/nbproject/project.xml
+ create mode 100644 WebServer/build.xml
+ create mode 100644 WebServer/nbproject/build-impl.xml
+ create mode 100644 WebServer/nbproject/private/private.xml
+ create mode 100644 WebServer/nbproject/project.xml
+
+d:\Code\UP>git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        LinearSort/build/
+        LinearSort/input.in
+        LinearSort/manifest.mf
+        LinearSort/nbproject/genfiles.properties
+        LinearSort/nbproject/private/private.properties
+        LinearSort/nbproject/project.properties
+        LinearSort/output.out
+        UP1_Juices/build/
+        UP1_Juices/juice.in
+        UP1_Juices/juice1.out
+        UP1_Juices/juice2.out
+        UP1_Juices/manifest.mf
+        UP1_Juices/nbproject/genfiles.properties
+        UP1_Juices/nbproject/private/private.properties
+        UP1_Juices/nbproject/project.properties
+        WebServer/build/
+        WebServer/manifest.mf
+        WebServer/nbproject/genfiles.properties
+        WebServer/nbproject/private/private.properties
+        WebServer/nbproject/project.properties
+        WebServer/src/webserver/Client.class
+        WebServer/src/webserver/Server.class
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+d:\Code\UP>echo *.in > .gitignore
+
+d:\Code\UP>git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        .gitignore
+        LinearSort/build/
+        LinearSort/input.in
+        LinearSort/manifest.mf
+        LinearSort/nbproject/genfiles.properties
+        LinearSort/nbproject/private/private.properties
+        LinearSort/nbproject/project.properties
+        LinearSort/output.out
+        UP1_Juices/build/
+        UP1_Juices/juice.in
+        UP1_Juices/juice1.out
+        UP1_Juices/juice2.out
+        UP1_Juices/manifest.mf
+        UP1_Juices/nbproject/genfiles.properties
+        UP1_Juices/nbproject/private/private.properties
+        UP1_Juices/nbproject/project.properties
+        WebServer/build/
+        WebServer/manifest.mf
+        WebServer/nbproject/genfiles.properties
+        WebServer/nbproject/private/private.properties
+        WebServer/nbproject/project.properties
+        WebServer/src/webserver/Client.class
+        WebServer/src/webserver/Server.class
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+d:\Code\UP>git add .gitignore
+
+d:\Code\UP>git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        new file:   .gitignore
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        LinearSort/build/
+        LinearSort/input.in
+        LinearSort/manifest.mf
+        LinearSort/nbproject/genfiles.properties
+        LinearSort/nbproject/private/private.properties
+        LinearSort/nbproject/project.properties
+        LinearSort/output.out
+        UP1_Juices/build/
+        UP1_Juices/juice.in
+        UP1_Juices/juice1.out
+        UP1_Juices/juice2.out
+        UP1_Juices/manifest.mf
+        UP1_Juices/nbproject/genfiles.properties
+        UP1_Juices/nbproject/private/private.properties
+        UP1_Juices/nbproject/project.properties
+        WebServer/build/
+        WebServer/manifest.mf
+        WebServer/nbproject/genfiles.properties
+        WebServer/nbproject/private/private.properties
+        WebServer/nbproject/project.properties
+        WebServer/src/webserver/Client.class
+        WebServer/src/webserver/Server.class
+
+
+d:\Code\UP>git commit -m "ignore"
+[master bdf7b66] ignore
+ 1 file changed, 1 insertion(+)
+ create mode 100644 .gitignore
+
+d:\Code\UP>git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        LinearSort/build/
+        LinearSort/input.in
+        LinearSort/manifest.mf
+        LinearSort/nbproject/genfiles.properties
+        LinearSort/nbproject/private/private.properties
+        LinearSort/nbproject/project.properties
+        LinearSort/output.out
+        UP1_Juices/build/
+        UP1_Juices/juice.in
+        UP1_Juices/juice1.out
+        UP1_Juices/juice2.out
+        UP1_Juices/manifest.mf
+        UP1_Juices/nbproject/genfiles.properties
+        UP1_Juices/nbproject/private/private.properties
+        UP1_Juices/nbproject/project.properties
+        WebServer/build/
+        WebServer/manifest.mf
+        WebServer/nbproject/genfiles.properties
+        WebServer/nbproject/private/private.properties
+        WebServer/nbproject/project.properties
+        WebServer/src/webserver/Client.class
+        WebServer/src/webserver/Server.class
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+d:\Code\UP>echo *.out >> .gitignore
+
+d:\Code\UP>git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   .gitignore
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        LinearSort/build/
+        LinearSort/input.in
+        LinearSort/manifest.mf
+        LinearSort/nbproject/genfiles.properties
+        LinearSort/nbproject/private/private.properties
+        LinearSort/nbproject/project.properties
+        LinearSort/output.out
+        UP1_Juices/build/
+        UP1_Juices/juice.in
+        UP1_Juices/juice1.out
+        UP1_Juices/juice2.out
+        UP1_Juices/manifest.mf
+        UP1_Juices/nbproject/genfiles.properties
+        UP1_Juices/nbproject/private/private.properties
+        UP1_Juices/nbproject/project.properties
+        WebServer/build/
+        WebServer/manifest.mf
+        WebServer/nbproject/genfiles.properties
+        WebServer/nbproject/private/private.properties
+        WebServer/nbproject/project.properties
+        WebServer/src/webserver/Client.class
+        WebServer/src/webserver/Server.class
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+d:\Code\UP>git add .gitignore
+
+d:\Code\UP>git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   .gitignore
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        LinearSort/build/
+        LinearSort/input.in
+        LinearSort/manifest.mf
+        LinearSort/nbproject/genfiles.properties
+        LinearSort/nbproject/private/private.properties
+        LinearSort/nbproject/project.properties
+        LinearSort/output.out
+        UP1_Juices/build/
+        UP1_Juices/juice.in
+        UP1_Juices/juice1.out
+        UP1_Juices/juice2.out
+        UP1_Juices/manifest.mf
+        UP1_Juices/nbproject/genfiles.properties
+        UP1_Juices/nbproject/private/private.properties
+        UP1_Juices/nbproject/project.properties
+        WebServer/build/
+        WebServer/manifest.mf
+        WebServer/nbproject/genfiles.properties
+        WebServer/nbproject/private/private.properties
+        WebServer/nbproject/project.properties
+        WebServer/src/webserver/Client.class
+        WebServer/src/webserver/Server.class
+
+
+d:\Code\UP>git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   .gitignore
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   .gitignore
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        LinearSort/build/
+        LinearSort/manifest.mf
+        LinearSort/nbproject/genfiles.properties
+        LinearSort/nbproject/private/private.properties
+        LinearSort/nbproject/project.properties
+        UP1_Juices/build/
+        UP1_Juices/manifest.mf
+        UP1_Juices/nbproject/genfiles.properties
+        UP1_Juices/nbproject/private/private.properties
+        UP1_Juices/nbproject/project.properties
+        WebServer/build/
+        WebServer/manifest.mf
+        WebServer/nbproject/genfiles.properties
+        WebServer/nbproject/private/private.properties
+        WebServer/nbproject/project.properties
+        WebServer/src/webserver/Client.class
+        WebServer/src/webserver/Server.class
+
+
+d:\Code\UP>echo *.in > .gitignore
+
+d:\Code\UP>echo *.out > .gitignore
+
+d:\Code\UP>echo *.in > .gitignore
+
+d:\Code\UP>echo *.out >> .gitignore
+
+d:\Code\UP>git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   .gitignore
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        LinearSort/build/
+        LinearSort/input.in
+        LinearSort/manifest.mf
+        LinearSort/nbproject/genfiles.properties
+        LinearSort/nbproject/private/private.properties
+        LinearSort/nbproject/project.properties
+        LinearSort/output.out
+        UP1_Juices/build/
+        UP1_Juices/juice.in
+        UP1_Juices/juice1.out
+        UP1_Juices/juice2.out
+        UP1_Juices/manifest.mf
+        UP1_Juices/nbproject/genfiles.properties
+        UP1_Juices/nbproject/private/private.properties
+        UP1_Juices/nbproject/project.properties
+        WebServer/build/
+        WebServer/manifest.mf
+        WebServer/nbproject/genfiles.properties
+        WebServer/nbproject/private/private.properties
+        WebServer/nbproject/project.properties
+        WebServer/src/webserver/Client.class
+        WebServer/src/webserver/Server.class
+
+
+d:\Code\UP>git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   .gitignore
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        LinearSort/build/
+        LinearSort/input.in
+        LinearSort/manifest.mf
+        LinearSort/nbproject/genfiles.properties
+        LinearSort/nbproject/private/private.properties
+        LinearSort/nbproject/project.properties
+        LinearSort/output.out
+        UP1_Juices/build/
+        UP1_Juices/juice.in
+        UP1_Juices/juice1.out
+        UP1_Juices/juice2.out
+        UP1_Juices/manifest.mf
+        UP1_Juices/nbproject/genfiles.properties
+        UP1_Juices/nbproject/private/private.properties
+        UP1_Juices/nbproject/project.properties
+        WebServer/build/
+        WebServer/manifest.mf
+        WebServer/nbproject/genfiles.properties
+        WebServer/nbproject/private/private.properties
+        WebServer/nbproject/project.properties
+        WebServer/src/webserver/Client.class
+        WebServer/src/webserver/Server.class
+
+
+d:\Code\UP>git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   .gitignore
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   .gitignore
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        LinearSort/build/
+        LinearSort/input.in
+        LinearSort/manifest.mf
+        LinearSort/nbproject/genfiles.properties
+        LinearSort/nbproject/private/private.properties
+        LinearSort/nbproject/project.properties
+        LinearSort/output.out
+        UP1_Juices/build/
+        UP1_Juices/juice.in
+        UP1_Juices/juice1.out
+        UP1_Juices/juice2.out
+        UP1_Juices/manifest.mf
+        UP1_Juices/nbproject/genfiles.properties
+        UP1_Juices/nbproject/private/private.properties
+        UP1_Juices/nbproject/project.properties
+        WebServer/build/
+        WebServer/manifest.mf
+        WebServer/nbproject/genfiles.properties
+        WebServer/nbproject/private/private.properties
+        WebServer/nbproject/project.properties
+        WebServer/src/webserver/Client.class
+        WebServer/src/webserver/Server.class
+
+
+d:\Code\UP>git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   .gitignore
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   .gitignore
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        LinearSort/build/
+        LinearSort/input.in
+        LinearSort/manifest.mf
+        LinearSort/nbproject/genfiles.properties
+        LinearSort/nbproject/private/private.properties
+        LinearSort/nbproject/project.properties
+        UP1_Juices/build/
+        UP1_Juices/juice.in
+        UP1_Juices/manifest.mf
+        UP1_Juices/nbproject/genfiles.properties
+        UP1_Juices/nbproject/private/private.properties
+        UP1_Juices/nbproject/project.properties
+        WebServer/build/
+        WebServer/manifest.mf
+        WebServer/nbproject/genfiles.properties
+        WebServer/nbproject/private/private.properties
+        WebServer/nbproject/project.properties
+        WebServer/src/webserver/Client.class
+        WebServer/src/webserver/Server.class
+
+
+d:\Code\UP>git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   .gitignore
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   .gitignore
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        LinearSort/build/
+        LinearSort/input.in
+        LinearSort/manifest.mf
+        LinearSort/nbproject/genfiles.properties
+        LinearSort/nbproject/private/private.properties
+        LinearSort/nbproject/project.properties
+        UP1_Juices/build/
+        UP1_Juices/juice.in
+        UP1_Juices/manifest.mf
+        UP1_Juices/nbproject/genfiles.properties
+        UP1_Juices/nbproject/private/private.properties
+        UP1_Juices/nbproject/project.properties
+        WebServer/build/
+        WebServer/manifest.mf
+        WebServer/nbproject/genfiles.properties
+        WebServer/nbproject/private/private.properties
+        WebServer/nbproject/project.properties
+        WebServer/src/webserver/Client.class
+        WebServer/src/webserver/Server.class
+
+
+d:\Code\UP>git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   .gitignore
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   .gitignore
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        LinearSort/build/
+        LinearSort/manifest.mf
+        LinearSort/nbproject/genfiles.properties
+        LinearSort/nbproject/private/private.properties
+        LinearSort/nbproject/project.properties
+        UP1_Juices/build/
+        UP1_Juices/manifest.mf
+        UP1_Juices/nbproject/genfiles.properties
+        UP1_Juices/nbproject/private/private.properties
+        UP1_Juices/nbproject/project.properties
+        WebServer/build/
+        WebServer/manifest.mf
+        WebServer/nbproject/genfiles.properties
+        WebServer/nbproject/private/private.properties
+        WebServer/nbproject/project.properties
+        WebServer/src/webserver/Client.class
+        WebServer/src/webserver/Server.class
+
+
+d:\Code\UP>git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   .gitignore
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   .gitignore
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        LinearSort/build/
+        LinearSort/manifest.mf
+        LinearSort/nbproject/genfiles.properties
+        LinearSort/nbproject/private/private.properties
+        LinearSort/nbproject/project.properties
+        UP1_Juices/build/
+        UP1_Juices/manifest.mf
+        UP1_Juices/nbproject/genfiles.properties
+        UP1_Juices/nbproject/private/private.properties
+        UP1_Juices/nbproject/project.properties
+        WebServer/build/
+        WebServer/manifest.mf
+        WebServer/nbproject/genfiles.properties
+        WebServer/nbproject/private/private.properties
+        WebServer/nbproject/project.properties
+        WebServer/src/webserver/Client.class
+        WebServer/src/webserver/Server.class
+
+
+d:\Code\UP>git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   .gitignore
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   .gitignore
+
+
+d:\Code\UP>git add .gitignore
+
+d:\Code\UP>git commit -m "ignore"
+[master 3b5117c] ignore
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+d:\Code\UP>git status
+On branch master
+nothing to commit, working directory clean
+
+d:\Code\UP>git remote add origin https://github.com/YanaYaroshevich/Training.git
+
+
+d:\Code\UP>git push -u origin master
+Username for 'https://github.com': YanaYaroshevich
+Password for 'https://YanaYaroshevich@github.com':
+Counting objects: 48, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (37/37), done.
+Writing objects: 100% (48/48), 14.79 KiB | 0 bytes/s, done.
+Total 48 (delta 7), reused 0 (delta 0)
+To https://github.com/YanaYaroshevich/Training.git
+ * [new branch]      master -> master
+Branch master set up to track remote branch master from origin.
+
+d:\Code\UP>git remote add origin https://github.com/YanaYaroshevich/Training.git
