@@ -135,6 +135,8 @@ function setName(value, evtObj){
 	if(!value){
 		return;
 	}
+
+	var prevName = name;
 	name = value;
 	var items = document.getElementsByClassName('inputName')[0];
 	var greeting = greetingCreation(name);
@@ -142,6 +144,16 @@ function setName(value, evtObj){
 	if(evtObj.target.classList.contains('btn-info')){
 		var h3 = document.getElementsByTagName('h3')[0];
 		h3.innerHTML = 'Hello, ' + name + '!';
+		var history = document.getElementsByClassName('history')[0].childNodes;
+		var msgName = "";
+		var msg = null;
+		for (var i = 0; i < history.length; i++){
+			msg = history[i].childNodes;
+			for (var j = 0; j < msg.length; j++){
+				if(msg[j].className == 'userName' && msg[j].innerHTML == prevName)
+					msg[j].innerHTML = name;
+			}
+		}
 	}
 
 	else{
