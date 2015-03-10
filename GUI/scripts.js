@@ -96,7 +96,7 @@ function createBtn(btnClass){
 	sp.setAttributeNode(attr);
 
 	attr = document.createAttribute('style');
-	attr.value = "color:red;";
+	attr.value = "color:#003264;";
 	sp.setAttributeNode(attr);
 
 	btn.appendChild(sp);
