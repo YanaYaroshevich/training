@@ -1,3 +1,5 @@
+'use strict'
+
 var name = "";
 var editFlag = false;
 var editMsgPos = -1;
@@ -12,10 +14,7 @@ function delegateEvent(evtObj) {
 		if (evtObj.target.classList.contains('btn-success') || evtObj.target.classList.contains('btn-info'))
 			onInputNameButtonClick(evtObj);
 		else if (evtObj.target.classList.contains('btn-primary')){
-			if (editFlag == false)
-				onInputMsgButtonClick(evtObj);
-			else
-				onSendEditedMsgBtnClick(evtObj);
+			onSendMsgButtonClick(evtObj);
 		}
 		else if (evtObj.target.classList.contains('btn-default') || evtObj.target.classList.contains('glyphicon')){
 			onEditMsgButtonClick(evtObj);
@@ -23,55 +22,32 @@ function delegateEvent(evtObj) {
 	}
 }
 
-function onInputMsgButtonClick(evtObj){
+function onSendMsgButtonClick(evtObj){
 	var textField = document.getElementById('inputMsgText');
-	sendMsg(textField.value, evtObj);
-	textField.value = '';
-}
-
-function onSendEditedMsgBtnClick(evtObj){
-	var textField = document.getElementById('inputMsgText');
-	sendEditedMsg(textField.value, evtObj);
+	(editFlag) ? sendEditedMsg(textField.value, evtObj) : sendMsg(textField.value, evtObj);
 	textField.value = '';
 }
 
 function onInputNameButtonClick(evtObj){
 	var nameField;
-
-	if(evtObj.target.classList.contains('btn-success')){
-		nameField = document.getElementById('nameInputText');
-	}
-
-	else if(evtObj.target.classList.contains('btn-info')){
-		nameField = document.getElementById('nameChangeText');
-	}
-
+	nameField = (evtObj.target.classList.contains('btn-success')) ? 
+				document.getElementById('nameInputText') : document.getElementById('nameChangeText'); 
 	setName(nameField.value, evtObj);
 	nameField.value = '';
 }
 
 function onEditMsgButtonClick(evtObj){
-	if (evtObj.target.hasChildNodes()){
-		if (evtObj.target.firstElementChild.className == "glyphicon glyphicon-wrench"){
-			var children = evtObj.target.parentElement.childNodes;
-			editMsg(evtObj, children, evtObj.target.parentElement);
-			
-		}
-		else if (evtObj.target.firstElementChild.className == "glyphicon glyphicon-trash"){
-			var items = document.getElementsByClassName('history')[0];
-			items.removeChild(evtObj.target.parentElement);	
-		}
-	}
-	else {
-		if (evtObj.target.className == "glyphicon glyphicon-wrench"){
-			var children = evtObj.target.parentElement.parentElement.childNodes;
-			editMsg(evtObj, children, evtObj.target.parentElement.parentElement);
-		}
-		else if (evtObj.target.className == "glyphicon glyphicon-trash"){
-			var items = document.getElementsByClassName('history')[0];
-			items.removeChild(evtObj.target.parentElement.parentElement);	
-		}
-	}
+	var items = document.getElementsByClassName('history')[0]; 
+	var msg = (evtObj.target.hasChildNodes()) ? evtObj.target.parentElement : evtObj.target.parentElement.parentElement;
+	var children = msg.childNodes;
+	var indicator = (evtObj.target.hasChildNodes()) ? evtObj.target.firstElementChild.className : evtObj.target.className;
+	(indicator == "glyphicon glyphicon-wrench") ? editMsg(evtObj, children, msg) : items.removeChild(msg);
+}
+
+function setAttr(obj, attrType, attrValue){
+	var attr = document.createAttribute(attrType);
+	attr.value = attrValue;
+	obj.setAttributeNode(attr);
 }
 
 function greetingCreation(value){
@@ -80,24 +56,14 @@ function greetingCreation(value){
 	return greeting; 
 }
 
-function createBtn(btnClass){
+function btnCreation(btnClass){
 	var btn = document.createElement('button');
-	var attr = document.createAttribute('type');
-	attr.value = "button";
-	btn.setAttributeNode(attr);
-	
-	attr = document.createAttribute('class');
-	attr.value = "btn btn-default btn-sm";
-	btn.setAttributeNode(attr);
+	setAttr(btn, 'type', 'button');
+	setAttr(btn, 'class', 'btn btn-default btn-sm');
 
 	var sp = document.createElement('span');
-	attr = document.createAttribute("class");
-	attr.value = btnClass;
-	sp.setAttributeNode(attr);
-
-	attr = document.createAttribute('style');
-	attr.value = "color:#003264;";
-	sp.setAttributeNode(attr);
+	setAttr(sp, 'class', btnClass);
+	setAttr(sp, 'style', 'color:#003264;');
 
 	btn.appendChild(sp);
 	return btn;
@@ -105,9 +71,7 @@ function createBtn(btnClass){
 
 function childCreation(value){
 	var child = document.createElement('div');
-	var attr = document.createAttribute("class");
-	attr.value = value;
-	child.setAttributeNode(attr);
+	setAttr(child, 'class', value);
 	return child;
 }
 
@@ -120,8 +84,8 @@ function createMsg(value){
 	var text = childCreation("text");
 	text.innerHTML = value;
 
-	var delBtn = createBtn("glyphicon glyphicon-wrench");
-	var editBtn = createBtn("glyphicon glyphicon-trash");
+	var delBtn = btnCreation("glyphicon glyphicon-wrench");
+	var editBtn = btnCreation("glyphicon glyphicon-trash");
 	
 	userMessage.appendChild(userName);
 	userMessage.appendChild(text);
@@ -144,16 +108,7 @@ function setName(value, evtObj){
 	if(evtObj.target.classList.contains('btn-info')){
 		var h3 = document.getElementsByTagName('h3')[0];
 		h3.innerHTML = 'Hello, ' + name + '!';
-		var history = document.getElementsByClassName('history')[0].childNodes;
-		var msgName = "";
-		var msg = null;
-		for (var i = 0; i < history.length; i++){
-			msg = history[i].childNodes;
-			for (var j = 0; j < msg.length; j++){
-				if(msg[j].className == 'userName' && msg[j].innerHTML == prevName)
-					msg[j].innerHTML = name;
-			}
-		}
+
 	}
 
 	else{
