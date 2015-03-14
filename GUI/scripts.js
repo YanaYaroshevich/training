@@ -69,19 +69,19 @@ function btnCreation(btnClass){
 	return btn;
 }
 
-function childCreation(value){
-	var child = document.createElement('div');
+function childCreation(value, elType){
+	var child = document.createElement(elType);
 	setAttr(child, 'class', value);
 	return child;
 }
 
 function createMsg(value){
-	var userMessage = childCreation("userMessage");
+	var userMessage = childCreation("userMessage", 'div');
 
-	var userName = childCreation("userName");
+	var userName = childCreation("userName", 'div');
 	userName.innerHTML = name;
 
-	var text = childCreation("text");
+	var text = childCreation("text", 'pre');
 	text.innerHTML = value;
 
 	var delBtn = btnCreation("glyphicon glyphicon-wrench");
