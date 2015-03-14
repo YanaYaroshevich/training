@@ -108,7 +108,6 @@ function setName(value, evtObj){
 	if(evtObj.target.classList.contains('btn-info')){
 		var h3 = document.getElementsByTagName('h3')[0];
 		h3.innerHTML = 'Hello, ' + name + '!';
-
 	}
 
 	else{
