@@ -64,15 +64,18 @@ function childCreation(value, elType){
 	return child;
 }
 
+function iconCreation(btnClass, color){
+	var sp = document.createElement('span');
+	setAttr(sp, 'class', btnClass);
+	setAttr(sp, 'style', 'color:' + color + ';');
+	return sp;
+}
+
 function btnCreation(btnClass){
 	var btn = document.createElement('button');
 	setAttr(btn, 'type', 'button');
 	setAttr(btn, 'class', 'btn btn-default btn-sm');
-
-	var sp = document.createElement('span');
-	setAttr(sp, 'class', btnClass);
-	setAttr(sp, 'style', 'color:#003264;');
-
+	var sp = iconCreation(btnClass, '#003264');
 	btn.appendChild(sp);
 	return btn;
 }
@@ -86,27 +89,27 @@ function createMsg(msg){
 	userMessage.appendChild(userName);
 
 	if(!msg.deleted){
+		if(msg.edited){
+			var sp = iconCreation("glyphicon glyphicon-pencil", '#ff0000');
+			userMessage.appendChild(sp);
+		}
+		
 		var text = childCreation("text", 'pre');
 		text.innerHTML = msg.text;
 		userMessage.appendChild(text);
 
-		if(msg.edited){
-			var ed = childCreation("flag", "div");
-			ed.innerHTML = "edited";
-			userMessage.appendChild(ed);
-		}
+		
 		if(msg.name == page.name){
-			var delBtn = btnCreation("glyphicon glyphicon-wrench");
-			var editBtn = btnCreation("glyphicon glyphicon-trash");
+			var delBtn = btnCreation("glyphicon glyphicon-pencil", '#003264');
+			var editBtn = btnCreation("glyphicon glyphicon-trash", '#003264');
 			userMessage.appendChild(delBtn);
 			userMessage.appendChild(editBtn);
 		}
 	}
 
 	else{
-		var ed = childCreation("flag", "div");
-		ed.innerHTML = "deleted";
-		userMessage.appendChild(ed);
+		var sp = iconCreation("glyphicon glyphicon-trash", '#ff0000');
+		userMessage.appendChild(sp);
 	}
 	return userMessage;
 }
@@ -160,7 +163,7 @@ function onEditMsgButtonClick(evtObj){
 	var msg = (evtObj.target.hasChildNodes()) ? evtObj.target.parentElement : evtObj.target.parentElement.parentElement;
 	id = msg.getAttribute('id');
 	var indicator = (evtObj.target.hasChildNodes()) ? evtObj.target.firstElementChild.className : evtObj.target.className;
-	(indicator == "glyphicon glyphicon-wrench") ? editMsg(id) : removeMsg(id);
+	(indicator == "glyphicon glyphicon-pencil") ? editMsg(id) : removeMsg(id);
 }
 
 function editMsg(id){
