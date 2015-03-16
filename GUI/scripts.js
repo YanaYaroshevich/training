@@ -112,7 +112,6 @@ function createPage(page){
 	if(page.name.length > 0){
 		updateName(page);		
 	}
-
 	var items = document.getElementsByClassName('history')[0];
 	while(items.childNodes[0]){
 		items.removeChild(items.childNodes[0]);
@@ -153,27 +152,29 @@ function editMsg(id){
 	var textToChange = "";
 	for (var i = 0; i < page.messages.length; i++){
 		var msg = page.messages[i];
-		if(msg.id == id && msg.name == page.name){
+		if(msg.id == id && msg.name == page.name && msg.id != 'deleted'){
 			textToChange = msg.text;
+			editFlag = true;
 			break;
 		}
 		else if (msg.id == id){
 			alert("you can't change this!");
+			break;
 		}
 	}
-	
 	var field = document.getElementById("inputMsgText");
-	field.value = textToChange;
-	editFlag = true;	
+	field.value = textToChange;	
 }
 
 function removeMsg(id){
 	for (var i = 0; i < page.messages.length; i++){
 		var msg = page.messages[i];
 		if(msg.id == id && msg.name == page.name){
-			for (var j = i; j < page.messages.length - 1; j++)
+			page.messages[i].text = "#deleted#";
+			page.messages[i].id = 'deleted';
+			/*for (var j = i; j < page.messages.length - 1; j++)
 				page.messages[j] = page.messages[j + 1];
-			page.messages.pop();
+			page.messages.pop();*/
 			break;
 		}
 		else if (msg.id == id){
@@ -196,7 +197,7 @@ function sendEditedMsg(value, evtObj){
 	for (var i = 0; i < page.messages.length; i++){
 		var msg = page.messages[i];
 		if(msg.id == id){
-			page.messages[i] = theMessage(value, page.name);
+			page.messages[i] = theMessage(value + '\r\n#redacted#', page.name);
 			break;
 		}
 	}
