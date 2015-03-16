@@ -96,3 +96,9 @@ img {
 .userName{
 	font-weight: bold;
 }
+
+.flag{
+	font-weight: bold;
+	color: #ff0000;
+	font-size: 15px;
+}

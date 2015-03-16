@@ -13,6 +13,8 @@ var theMessage = function(msgText, userName) {
 	return {
 		text: msgText,
 		name: userName,
+		edited: false,
+		deleted: false,
 		id: uniqueId()
 	};
 };
@@ -75,24 +77,37 @@ function btnCreation(btnClass){
 	return btn;
 }
 
-function createMsg(name, value, id){
+function createMsg(msg){
 	var userMessage = childCreation("userMessage", 'div');
-	setAttr(userMessage, 'id', id);
+	setAttr(userMessage, 'id', msg.id);
 
 	var userName = childCreation("userName", 'div');
-	userName.innerHTML = name;
-
-	var text = childCreation("text", 'pre');
-	text.innerHTML = value;
-
-	var delBtn = btnCreation("glyphicon glyphicon-wrench");
-	var editBtn = btnCreation("glyphicon glyphicon-trash");
-	
+	userName.innerHTML = msg.name;
 	userMessage.appendChild(userName);
-	userMessage.appendChild(text);
-	userMessage.appendChild(delBtn);
-	userMessage.appendChild(editBtn);
 
+	if(!msg.deleted){
+		var text = childCreation("text", 'pre');
+		text.innerHTML = msg.text;
+		userMessage.appendChild(text);
+
+		if(msg.edited){
+			var ed = childCreation("flag", "div");
+			ed.innerHTML = "edited";
+			userMessage.appendChild(ed);
+		}
+		if(msg.name == page.name){
+			var delBtn = btnCreation("glyphicon glyphicon-wrench");
+			var editBtn = btnCreation("glyphicon glyphicon-trash");
+			userMessage.appendChild(delBtn);
+			userMessage.appendChild(editBtn);
+		}
+	}
+
+	else{
+		var ed = childCreation("flag", "div");
+		ed.innerHTML = "deleted";
+		userMessage.appendChild(ed);
+	}
 	return userMessage;
 }
 
@@ -118,7 +133,7 @@ function createPage(page){
 	}	
 	for(var i = 0; i < page.messages.length; i++){
 		var msg = page.messages[i];
-		var userMessage = createMsg(msg.name, msg.text, msg.id);
+		var userMessage = createMsg(msg);
 		items.appendChild(userMessage);
 	}
 }
@@ -170,8 +185,7 @@ function removeMsg(id){
 	for (var i = 0; i < page.messages.length; i++){
 		var msg = page.messages[i];
 		if(msg.id == id && msg.name == page.name){
-			page.messages[i].text = "#deleted#";
-			page.messages[i].id = 'deleted';
+			msg.deleted = true;
 			/*for (var j = i; j < page.messages.length - 1; j++)
 				page.messages[j] = page.messages[j + 1];
 			page.messages.pop();*/
@@ -197,7 +211,8 @@ function sendEditedMsg(value, evtObj){
 	for (var i = 0; i < page.messages.length; i++){
 		var msg = page.messages[i];
 		if(msg.id == id){
-			page.messages[i] = theMessage(value + '\r\n#redacted#', page.name);
+			page.messages[i] = theMessage(value, page.name);
+			page.messages[i].edited = true;
 			break;
 		}
 	}
