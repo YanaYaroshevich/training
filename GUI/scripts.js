@@ -139,6 +139,7 @@ function createPage(page){
 		var userMessage = createMsg(msg);
 		items.appendChild(userMessage);
 	}
+	items.scrollTop = 9999;
 }
 
 function onInputNameButtonClick(evtObj){
@@ -146,7 +147,6 @@ function onInputNameButtonClick(evtObj){
 	nameField = (evtObj.target.classList.contains('btn-success')) ? 
 				document.getElementById('nameInputText') : document.getElementById('nameChangeText');
 	setName(nameField.value);
-	nameField.value = '';
 	createPage(page);
 	store(page);
 }

@@ -55,7 +55,8 @@ img {
     font-size: 20px;
     color: #003264;
 	background-color:#B0ECF4;
-	overflow: scroll;
+	overflow-y: scroll;
+	height: 350px;
 }
 
 .history .userMessage:hover{
@@ -74,7 +75,7 @@ img {
 
 #sendBtn{
 	margin-left: 22%;
-	margin-top: 7%;
+	margin-top: 7.5%;
 	position: absolute;
 	visibility: hidden;
 }
