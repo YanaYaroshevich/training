@@ -56,7 +56,7 @@ img {
     color: #003264;
 	background-color:#B0ECF4;
 	overflow-y: scroll;
-	height: 350px;
+	height: 330px;
 }
 
 .history .userMessage:hover{
