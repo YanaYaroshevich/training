@@ -4,6 +4,7 @@ import com.sun.net.httpserver.HttpServer;
 import org.json.simple.parser.ParseException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import com.sun.net.httpserver.Headers;
 
 import java.text.SimpleDateFormat;
 
@@ -88,9 +89,6 @@ public class Server implements HttpHandler {
                 return messageExchange.getServerResponse(history.subList(index, history.size()));
             } else {
                 return "Token query parameter is absent in url: " + query;
-                d = new Date();
-                out.println(d.toLocaleString() + " Token query parameter is absent in url: " + query);
-                out.flush();
             }
         }
         d = new Date();
@@ -127,6 +125,8 @@ public class Server implements HttpHandler {
             }
             catch (ParseException p){}
             byte[] bytes = response.getBytes();
+            Headers headers = httpExchange.getResponseHeaders();
+            headers.add("Access-Control-Allow-Origin","*");      
             httpExchange.sendResponseHeaders(200, bytes.length);
 
             OutputStream os = httpExchange.getResponseBody();
