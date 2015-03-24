@@ -1,44 +1,47 @@
 var uniqueId = function() {
 	var date = Date.now();
-
 	var random = Math.random() * Math.random();
 
-	return Math.floor(date * random);
+	return Math.floor(date * random).toString();
 };
 
 var theTask = function(text, done) {
 	return {
 		description:text,
-		done:done,
+		done: !!done,
 		id: uniqueId()
 	};
 };
 
-var taskList = null;
+var taskList = [];
 
 function run(){
-	taskList = restore() || [ theTask('Сделать разметку', true),
-	theTask('Выучить JavaScript', true),
-	theTask('Написать чат !', false)
-	];
-
 	var appContainer = document.getElementsByClassName('todos')[0];
 
 	appContainer.addEventListener('click', delegateEvent);
 	appContainer.addEventListener('change', delegateEvent);
+	appContainer.addEventListener('dblclick', delegateEvent);
 
-	createAllTasks();
+	var allTasks = restore() || [ theTask('Сделать разметку', true),
+			theTask('Выучить JavaScript', true),
+			theTask('Написать чат !')
+		];
+
+	createAllTasks(allTasks);
+	output(taskList);
 	updateCounter();
 }
 
-function createAllTasks() {
-	for(var i = 0; i < taskList.length; i++) {
-		addTodo(taskList[i]);
-	}
+function createAllTasks(allTasks) {
+	for(var i = 0; i < allTasks.length; i++)
+		addTodo(allTasks[i]);
 }
 
 function delegateEvent(evtObj) {
-	if(evtObj.type === 'click' 
+	if(evtObj.type === 'dblclick'
+		&& evtObj.target.classList.contains('item'))
+		onDblClickItem(evtObj.target);
+	if(evtObj.type === 'click'
 		&& evtObj.target.classList.contains('btn-add'))
 		onAddButtonClick();
 	if(evtObj.type === 'change' 
@@ -47,37 +50,55 @@ function delegateEvent(evtObj) {
 		onToggleItem(evtObj.target.parentElement);
 }
 
-function onAddButtonClick(){
-	var todoText = document.getElementById('todoText');
-
-	if(todoText.value == '')
-		return;
-
-	var newTask = theTask(todoText.value, false);
-
-	taskList.push(newTask);
-	addTodo(newTask);
-	todoText.value = '';
-	updateCounter();
-	store();
-} 
-
-function onToggleItem(divItem) {
-	var id = getIdOfTask(divItem);
+function onDblClickItem(divItem) {
+	var id = divItem.attributes['data-task-id'].value;
 
 	for(var i = 0; i < taskList.length; i++) {
 		if(taskList[i].id != id)
 			continue;
 
-		toggle(divItem, taskList[i]);
-		store();
+		changeDescription(taskList[i]);
+		updateItem(divItem, taskList[i]);
+		store(taskList);
+
 		return;
 	}
 }
 
-function toggle(divItem, task) {
+function changeDescription(task){
+	task.description += '!';
+}
+
+function onAddButtonClick(){
+	var todoText = document.getElementById('todoText');
+	var newTask = theTask(todoText.value);
+
+	if(todoText.value == '')
+		return;
+
+	addTodo(newTask);
+	todoText.value = '';
+	updateCounter();
+	store(taskList);
+} 
+
+function onToggleItem(divItem) {
+	var id = divItem.attributes['data-task-id'].value;
+
+	for(var i = 0; i < taskList.length; i++) {
+		if(taskList[i].id != id)
+			continue;
+
+		toggle(taskList[i]);
+		updateItem(divItem, taskList[i]);
+		store(taskList);
+
+		return;
+	}
+}
+
+function toggle(task) {
 	task.done = !task.done;
-	updateItem(divItem, task);
 }
 
 function updateItem(divItem, task){
@@ -89,20 +110,15 @@ function updateItem(divItem, task){
 		divItem.firstChild.checked = false;
 	}
 
-	divItem.setAttribute('data-task-id', task.id.toString());
+	divItem.setAttribute('data-task-id', task.id);
 	divItem.lastChild.textContent = task.description;
-}
-
-function getIdOfTask(divItem) {
-	var dataTaskId = divItem.attributes['data-task-id'].value;
-
-	return parseInt(dataTaskId);
 }
 
 function addTodo(task) {
 	var item = createItem(task);
 	var items = document.getElementsByClassName('items')[0];
 
+	taskList.push(task);
 	items.appendChild(item);
 }
 
@@ -124,13 +140,15 @@ function updateCounter(){
 	counter.innerText = items.children.length.toString();
 }
 
-function store() {
+function store(listToSave) {
+	output(listToSave);
+
 	if(typeof(Storage) == "undefined") {
 		alert('localStorage is not accessible');
 		return;
 	}
 
-	localStorage.setItem("TODOs taskList", JSON.stringify(taskList));
+	localStorage.setItem("TODOs taskList", JSON.stringify(listToSave));
 }
 
 function restore() {
@@ -141,8 +159,11 @@ function restore() {
 
 	var item = localStorage.getItem("TODOs taskList");
 
-	if(item == null)
-		return null;
+	return item && JSON.parse(item);
+}
 
-	return JSON.parse(item);
+function output(value){
+	var output = document.getElementById('output');
+
+	output.innerText = "var taskList = " + JSON.stringify(value, null, 2) + ";";
 }
