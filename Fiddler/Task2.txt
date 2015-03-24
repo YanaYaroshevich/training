@@ -1,0 +1,10 @@
+GET http://localhost:999/chat?token=TN27EN HTTP/1.1
+User-Agent: Composer
+Host: localhost:999
+
+
+HTTP/1.1 200 OK
+Content-length: 37
+Date: Tue, 24 Mar 2015 14:40:17 GMT
+
+{"token":"TN19EN","messages":["111"]}

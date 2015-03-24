@@ -1,0 +1,15 @@
+GET http://localhost:999/chat?token=TN11EN HTTP/1.1
+Host: localhost:999
+Connection: keep-alive
+Cache-Control: max-age=0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US,en;q=0.8,ru;q=0.6
+
+
+HTTP/1.1 200 OK
+Content-length: 48
+Date: Tue, 24 Mar 2015 14:34:05 GMT
+
+{"token":"TN35EN","messages":["123","12","111"]}
