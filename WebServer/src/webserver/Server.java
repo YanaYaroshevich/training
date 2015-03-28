@@ -63,10 +63,10 @@ public class Server implements HttpHandler {
             response = doGet(httpExchange);    
         } else if ("POST".equals(httpExchange.getRequestMethod())) {
             doPost(httpExchange);
-        } else if ("DELETE".equals(httpExchange.getRequestMethod())) {
-            doDelete(httpExchange);
+        } else if ("DELETE".equals(httpExchange.getRequestMethod()) || "PUT".equals(httpExchange.getRequestMethod())) {
+            doPutOrDelete(httpExchange);
             response = doGet(httpExchange);
-        } 
+        }
         else {
             response = "Unsupported http method: " + httpExchange.getRequestMethod();
             d = new Date();
@@ -123,16 +123,20 @@ public class Server implements HttpHandler {
         }
     }
 
-    private void doDelete(HttpExchange httpExchange){
+    private void doPutOrDelete(HttpExchange httpExchange){
         try{
             JSONObject newMsg = new JSONObject();
-            JSONObject idObj = messageExchange.getClientMessage(httpExchange.getRequestBody());
+            JSONObject newParams = messageExchange.getClientMessage(httpExchange.getRequestBody());
             for (Iterator <JSONObject> it = history.iterator(); it.hasNext();){
                 newMsg = it.next();
-                if (newMsg.get("id").equals(idObj.get("id"))){
-                    newMsg.put("text", "'is deleted'");
+                if (newMsg.get("id").equals(newParams.get("id"))){
                     newMsg.put("date", (new Date()).toLocaleString());
-                    newMsg.put("isDeleted", true);
+                    if ("DELETE".equals(httpExchange.getRequestMethod())){
+                        newMsg.put("text", "'is deleted'");
+                        newMsg.put("isDeleted", "true");
+                    } else if (newMsg.get("isDeleted").equals("false")){
+                        newMsg.put("text", newParams.get("text"));
+                    }
                 }
             }
         }

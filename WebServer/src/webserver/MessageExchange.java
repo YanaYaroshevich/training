@@ -19,10 +19,10 @@ public class MessageExchange {
         return (Integer.valueOf(token.substring(2, token.length() - 2)) - 11) / 8;
     }
 
-    public int getUniqueId(){
+    public String getUniqueId(){
         Date date = new Date();
         Random rand = new Random(date.getTime());
-        return Math.abs(rand.nextInt() * rand.nextInt());
+        return ((Integer)Math.abs(rand.nextInt() * rand.nextInt())).toString();
     }
 
     public String getServerResponse(List<JSONObject> messages) {
@@ -38,7 +38,7 @@ public class MessageExchange {
         jsonObject.put("name", name);
         jsonObject.put("id", getUniqueId());
         jsonObject.put("date", (new Date()).toLocaleString());
-        jsonObject.put("isDeleted", false);
+        jsonObject.put("isDeleted", "false");
         return jsonObject.toJSONString();
     }
 
