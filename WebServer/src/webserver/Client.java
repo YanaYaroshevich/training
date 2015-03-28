@@ -18,6 +18,7 @@ public class Client implements Runnable {
     private Integer port;
     private PrintWriter out;
     private Date d;
+    private String name;
 
     public Client(String host, Integer port) throws IOException{
         this.host = host;
@@ -33,10 +34,18 @@ public class Client implements Runnable {
             String serverHost = args[0];
             Integer serverPort = Integer.parseInt(args[1]);
             Client client = new Client(serverHost, serverPort);
+            client.nameInput();
             new Thread(client).start();
             System.out.println("Connected to server: " + serverHost + ":" + serverPort);
             client.listen();
         }
+    }
+
+    private void nameInput() throws IOException{
+        System.out.print("Enter your name, please ");
+        Scanner sc = new Scanner(System.in);
+        name = sc.nextLine();
+        System.out.println("Your name: " + name);
     }
 
     private HttpURLConnection getHttpURLConnection() throws IOException {
@@ -126,7 +135,7 @@ public class Client implements Runnable {
             }
 
             try {
-                Thread.sleep(5000);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 System.err.println("ERROR: " + e.getMessage());
             }
