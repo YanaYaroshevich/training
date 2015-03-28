@@ -4,6 +4,8 @@ import org.json.simple.parser.ParseException;
 
 import java.io.*;
 import java.util.List;
+import java.util.Date;
+import java.util.Random;
 
 public class MessageExchange {
     private JSONParser jsonParser = new JSONParser();
@@ -17,21 +19,31 @@ public class MessageExchange {
         return (Integer.valueOf(token.substring(2, token.length() - 2)) - 11) / 8;
     }
 
-    public String getServerResponse(List<String> messages) {
+    public int getUniqueId(){
+        Date date = new Date();
+        Random rand = new Random(date.getTime());
+        return Math.abs(rand.nextInt() * rand.nextInt());
+    }
+
+    public String getServerResponse(List<JSONObject> messages) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("messages", messages);
         jsonObject.put("token", getToken(messages.size()));
         return jsonObject.toJSONString();
     }
 
-    public String getClientSendMessageRequest(String message) {
+    public String getClientSendMessageRequest(String text, String name) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("message", message);
+        jsonObject.put("text", text);
+        jsonObject.put("name", name);
+        jsonObject.put("id", getUniqueId());
+        jsonObject.put("date", (new Date()).toLocaleString());
+        jsonObject.put("isDeleted", false);
         return jsonObject.toJSONString();
     }
 
-    public String getClientMessage(InputStream inputStream) throws ParseException {
-        return (String) getJSONObject(inputStreamToString(inputStream)).get("message");
+    public JSONObject getClientMessage(InputStream inputStream) throws ParseException {
+        return getJSONObject(inputStreamToString(inputStream));
     }
 
     public JSONObject getJSONObject(String json) throws ParseException {
@@ -49,7 +61,6 @@ public class MessageExchange {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return new String(baos.toByteArray());
     }
 }

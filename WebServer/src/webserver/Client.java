@@ -12,7 +12,7 @@ import java.util.Scanner;
 import java.util.Date;
 
 public class Client implements Runnable {
-    private List<String> history = new ArrayList<String>();
+    private List<JSONObject> history = new ArrayList<JSONObject>();
     private MessageExchange messageExchange = new MessageExchange();
     private String host;
     private Integer port;
@@ -56,26 +56,30 @@ public class Client implements Runnable {
         return (HttpURLConnection) url.openConnection();
     }
 
-    public List<String> getMessages() {
-        List<String> list = new ArrayList<String>();
+    public List<JSONObject> getMessages() {
+        List<JSONObject> list = new ArrayList<JSONObject>();
         HttpURLConnection connection = null;
         try {
             d = new Date();
             out.println(d.toLocaleString() + " request begin");
             out.println(d.toLocaleString() + " request method: GET");
             out.flush();
+
             connection = getHttpURLConnection();
             connection.connect();
             String response = messageExchange.inputStreamToString(connection.getInputStream());
             JSONObject jsonObject = messageExchange.getJSONObject(response);
             JSONArray jsonArray = (JSONArray) jsonObject.get("messages");
+
             d = new Date();
             out.println(d.toLocaleString() + " server response parameters: messages: " + jsonArray + " token: " + jsonObject.get("token"));
             out.flush();
+
             for (Object o : jsonArray) {
-                System.out.println(o);
-                list.add(o.toString());
+                System.out.println(o.toString());
+                list.add((JSONObject)o);
             }
+
         } catch (IOException e) {
             System.err.println("ERROR: " + e.getMessage());
         } catch (ParseException e) {
@@ -92,13 +96,14 @@ public class Client implements Runnable {
         return list;
     }
 
-    public void sendMessage(String message) {
+    public void sendMessage(String text) {
         HttpURLConnection connection = null;
         try {
             d = new Date();
             out.println(d.toLocaleString() + " request begin");
             out.println(d.toLocaleString() + " request method: POST");
             out.flush();
+
             connection = getHttpURLConnection();
             connection.setDoOutput(true);
 
@@ -106,12 +111,13 @@ public class Client implements Runnable {
 
             DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
 
-            byte[] bytes = messageExchange.getClientSendMessageRequest(message).getBytes();
+            byte[] bytes = messageExchange.getClientSendMessageRequest(text, name).getBytes();
             wr.write(bytes, 0, bytes.length);
             wr.flush();
             wr.close();
+
             d = new Date();
-            out.println(d.toLocaleString() + " request parameters: message: " + message);
+            out.println(d.toLocaleString() + " request parameters: name: " + name + " text: " + text);
             out.flush();
             connection.getInputStream();
 
@@ -129,7 +135,7 @@ public class Client implements Runnable {
 
     public void listen() {
         while (true) {
-            List<String> list = getMessages();
+            List<JSONObject> list = getMessages();
             if (list.size() > 0) {
                 history.addAll(list);
             }
@@ -147,8 +153,8 @@ public class Client implements Runnable {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            String message = scanner.nextLine();
-            sendMessage(message);
+            String text = scanner.nextLine();
+            sendMessage(text);
         }
     }
 }

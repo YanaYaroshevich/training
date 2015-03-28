@@ -1,10 +1,11 @@
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import com.sun.net.httpserver.Headers;
+
 import org.json.simple.parser.ParseException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import com.sun.net.httpserver.Headers;
 
 import java.text.SimpleDateFormat;
 
@@ -12,21 +13,23 @@ import java.io.*;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Date;
+import java.util.Iterator;
 
 public class Server implements HttpHandler {
-    private List<String> history = new ArrayList<String>();
+    private List<JSONObject> history = new ArrayList<JSONObject>();
     private MessageExchange messageExchange = new MessageExchange();
     private JSONParser jsonParser = new JSONParser();
     private PrintWriter out;
     private Date d;
 
     public Server() throws IOException{
-         out = new PrintWriter(new BufferedWriter(new FileWriter(new File("serverlog.txt"))));
+        out = new PrintWriter(new BufferedWriter(new FileWriter(new File("serverlog.txt"))));
     }
 
     public static void main(String[] args) {
@@ -39,9 +42,6 @@ public class Server implements HttpHandler {
                 HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
                 System.out.println("Server started.");
                 String serverHost = InetAddress.getLocalHost().getHostAddress();
-                System.out.println("Get list of messages: GET http://" + serverHost + ":" + port + "/chat?token={token}");
-                System.out.println("Send message: POST http://" + serverHost + ":" + port + "/chat provide body json in format {\"message\" : \"{message}\"} ");
-
                 server.createContext("/chat", new Server());
                 server.setExecutor(null);
                 server.start();
@@ -56,13 +56,18 @@ public class Server implements HttpHandler {
         d = new Date();
         out.println(d.toLocaleString() + " request begin");
         out.flush();
+
         String response = "";
+
         if ("GET".equals(httpExchange.getRequestMethod())) {
-            response = doGet(httpExchange);
-            
+            response = doGet(httpExchange);    
         } else if ("POST".equals(httpExchange.getRequestMethod())) {
             doPost(httpExchange);
-        } else {
+        } else if ("DELETE".equals(httpExchange.getRequestMethod())) {
+            doDelete(httpExchange);
+            response = doGet(httpExchange);
+        } 
+        else {
             response = "Unsupported http method: " + httpExchange.getRequestMethod();
             d = new Date();
             out.println(d.toLocaleString() + " " + response);
@@ -80,11 +85,13 @@ public class Server implements HttpHandler {
         if (query != null) {
             Map<String, String> map = queryToMap(query);
             String token = map.get("token");
+
             if (token != null && !"".equals(token)) {
                 d = new Date();
                 out.println(d.toLocaleString() + " request method: GET");
                 out.println(d.toLocaleString() + " request parameters: token: " + token);
                 out.flush();
+
                 int index = messageExchange.getIndex(token);
                 return messageExchange.getServerResponse(history.subList(index, history.size()));
             } else {
@@ -99,17 +106,37 @@ public class Server implements HttpHandler {
 
     private void doPost(HttpExchange httpExchange) {
         try {
-            String message = messageExchange.getClientMessage(httpExchange.getRequestBody());
+            JSONObject msg = messageExchange.getClientMessage(httpExchange.getRequestBody());
+
             d = new Date();
             out.println(d.toLocaleString() + " request method: POST");
-            out.println(d.toLocaleString() + " request parameters: message: " + message);
+            out.println(d.toLocaleString() + " request parameters: " + msg);
             out.flush();
-            System.out.println("Get Message from User : " + message);
-            history.add(message);
+
+            System.out.println("Get Message from User: " + msg);
+            history.add(msg);
         } catch (ParseException e) {
             d = new Date();
             out.println(d.toLocaleString() + " Invalid user message");
             out.flush();
+            System.err.println("Invalid user message: " + httpExchange.getRequestBody() + " " + e.getMessage());
+        }
+    }
+
+    private void doDelete(HttpExchange httpExchange){
+        try{
+            JSONObject newMsg = new JSONObject();
+            JSONObject idObj = messageExchange.getClientMessage(httpExchange.getRequestBody());
+            for (Iterator <JSONObject> it = history.iterator(); it.hasNext();){
+                newMsg = it.next();
+                if (newMsg.get("id").equals(idObj.get("id"))){
+                    newMsg.put("text", "'is deleted'");
+                    newMsg.put("date", (new Date()).toLocaleString());
+                    newMsg.put("isDeleted", true);
+                }
+            }
+        }
+        catch(ParseException e){
             System.err.println("Invalid user message: " + httpExchange.getRequestBody() + " " + e.getMessage());
         }
     }
@@ -124,6 +151,7 @@ public class Server implements HttpHandler {
                 out.flush();
             }
             catch (ParseException p){}
+            
             byte[] bytes = response.getBytes();
             Headers headers = httpExchange.getResponseHeaders();
             headers.add("Access-Control-Allow-Origin","*");      
