@@ -1,0 +1,33 @@
+GET http://localhost:8888/chat?token=TN11EN HTTP/1.1
+User-Agent: Java/1.8.0_25
+Host: localhost:8888
+Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
+Connection: keep-alive
+
+
+HTTP/1.1 200 OK with automatic headers
+Date: Tue, 24 Mar 2015 19:15:27 GMT
+Content-Length: 39
+Cache-Control: max-age=0, must-revalidate
+Content-Type: application/octet-stream
+
+{"messages":["msg1"],"token":"TN19EN"}
+
+------------------------------------------------------------------
+
+GET http://localhost:8888/chat?token=TN19EN HTTP/1.1
+User-Agent: Java/1.8.0_25
+Host: localhost:8888
+Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
+Connection: keep-alive
+
+
+HTTP/1.1 200 OK with automatic headers
+Date: Tue, 24 Mar 2015 19:15:28 GMT
+Content-Length: 32
+Cache-Control: max-age=0, must-revalidate
+Content-Type: application/octet-stream
+
+{"messages":[],"token":"TN19EN"}
+
+------------------------------------------------------------------
