@@ -29,3 +29,8 @@ dist
 *.orig
 test-reports
 >>>>>>> c9c0aba6518fede4ac3f8718a9dd507eb070a771
+
+*.md
+*.iml
+*.ipr
+*.iws
