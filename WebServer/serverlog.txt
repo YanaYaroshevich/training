@@ -1,0 +1,28 @@
+08.04.2015 3:41:43 request begin
+08.04.2015 3:41:43 request method: GET
+08.04.2015 3:41:43 request parameters: token: TN11EN
+08.04.2015 3:41:43 server response
+08.04.2015 3:41:43response parameters: token: TN11EN messages: []
+08.04.2015 3:41:43 request end
+08.04.2015 3:42:02 request begin
+08.04.2015 3:42:02 request method: GET
+08.04.2015 3:42:02 request parameters: token: TE11EN
+08.04.2015 3:42:02 server response
+08.04.2015 3:42:02response parameters: token: TN11EN messages: []
+08.04.2015 3:42:02 request end
+08.04.2015 3:42:04 request begin
+08.04.2015 3:42:04 request method: POST
+08.04.2015 3:42:04 request parameters: {"id":"431723141607","isEdited":false,"text":"123","name":"Yana","isDeleted":false,"date":"07.04.2015 18:42:04"}
+08.04.2015 3:42:04 request end
+08.04.2015 3:42:05 request begin
+08.04.2015 3:42:05 request method: GET
+08.04.2015 3:42:05 request parameters: token: TN11EN
+08.04.2015 3:42:05 server response
+08.04.2015 3:42:05response parameters: token: TN19EN messages: [{"id":"431723141607","text":"123","isEdited":false,"name":"Yana","date":"07.04.2015 18:42:04","isDeleted":false}]
+08.04.2015 3:42:05 request end
+08.04.2015 3:42:11 request begin
+08.04.2015 3:42:11 request method: GET
+08.04.2015 3:42:11 request parameters: token: TN11EN
+08.04.2015 3:42:11 server response
+08.04.2015 3:42:11response parameters: token: TN19EN messages: [{"id":"431723141607","text":"123","isEdited":false,"name":"Yana","date":"07.04.2015 18:42:04","isDeleted":false}]
+08.04.2015 3:42:11 request end

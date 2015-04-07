@@ -1,0 +1,53 @@
+08.04.2015 3:45:23 request begin
+08.04.2015 3:45:23 request method: GET
+08.04.2015 3:45:23 request parameters: url: http://10.160.19.241:8888/chat?token=TN11EN
+08.04.2015 3:45:23 server response parameters: messages: [{"id":"431723141607","text":"123","isEdited":false,"name":"Yana","date":"07.04.2015 18:42:04","isDeleted":false}] token: TN19EN
+08.04.2015 3:45:23 request end
+08.04.2015 3:45:24 request begin
+08.04.2015 3:45:24 request method: GET
+08.04.2015 3:45:24 request parameters: url: http://10.160.19.241:8888/chat?token=TN19EN
+08.04.2015 3:45:24 request end
+08.04.2015 3:45:24 request begin
+08.04.2015 3:45:24 request method: GET
+08.04.2015 3:45:24 request parameters: url: http://10.160.19.241:8888/chat?token=TN19EN
+08.04.2015 3:45:24 request end
+08.04.2015 3:45:25 request begin
+08.04.2015 3:45:25 request method: GET
+08.04.2015 3:45:25 request parameters: url: http://10.160.19.241:8888/chat?token=TN19EN
+08.04.2015 3:45:25 request end
+08.04.2015 3:45:25 request begin
+08.04.2015 3:45:25 request method: GET
+08.04.2015 3:45:25 request parameters: url: http://10.160.19.241:8888/chat?token=TN19EN
+08.04.2015 3:45:25 request end
+08.04.2015 3:45:26 request begin
+08.04.2015 3:45:26 request method: GET
+08.04.2015 3:45:26 request parameters: url: http://10.160.19.241:8888/chat?token=TN19EN
+08.04.2015 3:45:26 request end
+08.04.2015 3:45:26 request begin
+08.04.2015 3:45:26 request method: GET
+08.04.2015 3:45:26 request parameters: url: http://10.160.19.241:8888/chat?token=TN19EN
+08.04.2015 3:45:26 request end
+08.04.2015 3:45:27 request begin
+08.04.2015 3:45:27 request method: GET
+08.04.2015 3:45:27 request parameters: url: http://10.160.19.241:8888/chat?token=TN19EN
+08.04.2015 3:45:27 request end
+08.04.2015 3:45:27 request begin
+08.04.2015 3:45:27 request method: GET
+08.04.2015 3:45:27 request parameters: url: http://10.160.19.241:8888/chat?token=TN19EN
+08.04.2015 3:45:27 request end
+08.04.2015 3:45:28 request begin
+08.04.2015 3:45:28 request method: GET
+08.04.2015 3:45:28 request parameters: url: http://10.160.19.241:8888/chat?token=TN19EN
+08.04.2015 3:45:28 request end
+08.04.2015 3:45:28 request begin
+08.04.2015 3:45:28 request method: GET
+08.04.2015 3:45:28 request parameters: url: http://10.160.19.241:8888/chat?token=TN19EN
+08.04.2015 3:45:28 request end
+08.04.2015 3:45:29 request begin
+08.04.2015 3:45:29 request method: GET
+08.04.2015 3:45:29 request parameters: url: http://10.160.19.241:8888/chat?token=TN19EN
+08.04.2015 3:45:29 request end
+08.04.2015 3:45:29 request begin
+08.04.2015 3:45:29 request method: GET
+08.04.2015 3:45:29 request parameters: url: http://10.160.19.241:8888/chat?token=TN19EN
+08.04.2015 3:45:29 request end
