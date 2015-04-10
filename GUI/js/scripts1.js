@@ -28,39 +28,24 @@ var appState = {
 				cond: true
 };
 
-function getDate(){
-	return (new Date()).toLocaleDateString() + " " + (new Date()).toLocaleTimeString();
-}
-
-function defaultErrorHandler(message) {
-	appState.cond = false;
-	console.error(message);
-	restore();
-}
-
-function isError(text) {
-	if(text == "")
-		return false;
-	try {
-		var obj = JSON.parse(text);
-	} catch(ex) {
-		appState.cond = false;
-		restore();
-		return true;
-	}
-	return !!obj.error;
-}
-
 function run() {
 	document.addEventListener('click', delegateEvent);
 	restore();
 }
 
-function setName(value){
-	if(!value){
-		return;
+function delegateEvent(evtObj) {
+	if(evtObj.type === 'click'){
+		if (evtObj.target.classList.contains('btn-success') 
+			|| evtObj.target.classList.contains('btn-info'))
+			onInputNameButtonClick(evtObj);
+		else if (evtObj.target.classList.contains('btn-primary')){
+			onSendMsgButtonClick(evtObj);
+		}
+		else if (evtObj.target.classList.contains('btn-default') 
+			|| evtObj.target.classList.contains('glyphicon')){
+			onEditMsgButtonClick(evtObj);
+		}
 	}
-	appState.name = value;
 }
 
 function onInputNameButtonClick(evtObj){
@@ -85,25 +70,6 @@ function onEditMsgButtonClick(evtObj){
 	(indicator == "glyphicon glyphicon-pencil") ? editMsg(id) : removeMsg(id);
 }
 
-function removeMsg(id){
-	for (var i = 0; i < appState.messages.length; i++){
-		var msg = appState.messages[i];
-		if(msg.id == id && msg.name == appState.name){
-			msg.isDeleted = true;
-			break;
-		}
-		else if (msg.id == id){
-			alert("you can't delete this!");
-		}
-	}
-
-	del(appState.mainUrl, JSON.stringify({id: id}), function(){
-		editFlag = true;
-		restore();
-		createPage();
-    });
-}
-
 function editMsg(id){
 	var textToChange = "";
 	for (var i = 0; i < appState.messages.length; i++){
@@ -123,6 +89,17 @@ function editMsg(id){
 	field.value = textToChange;	
 }
 
+function sendEditedMsg(value, evtObj){
+	var obj = {
+		id: id,
+		text: value
+	};
+
+	put(appState.mainUrl + '?token=' + 'TE11EN', JSON.stringify(obj), function(responseText){
+		getHistory(responseText);
+    });
+}
+
 function sendMsg(value, evtObj){
 	if(!value){
 		return;
@@ -131,6 +108,55 @@ function sendMsg(value, evtObj){
 	post(appState.mainUrl, JSON.stringify(objMsg), function(){
 		restore();
 	});
+}
+
+function removeMsg(id){
+	for (var i = 0; i < appState.messages.length; i++){
+		var msg = appState.messages[i];
+		if(msg.id == id && msg.name == appState.name){
+			msg.isDeleted = true;
+			break;
+		}
+		else if (msg.id == id){
+			alert("you can't delete this!");
+		}
+	}
+
+	del(appState.mainUrl, JSON.stringify({id: id}), function(){
+		editFlag = true;
+		restore();
+		createPage();
+    });
+}
+
+function getDate(){
+	return (new Date()).toLocaleDateString() + " " + (new Date()).toLocaleTimeString();
+}
+
+function defaultErrorHandler(message) {
+	appState.cond = false;
+	console.error(message);
+	restore();
+}
+
+function isError(text) {
+	if(text == "")
+		return false;
+	try {
+		var obj = JSON.parse(text);
+	} catch(ex) {
+		appState.cond = false;
+		restore();
+		return true;
+	}
+	return !!obj.error;
+}
+
+function setName(value){
+	if(!value){
+		return;
+	}
+	appState.name = value;
 }
 
 function getHistory(responseText, continueWith){
@@ -159,15 +185,40 @@ function getHistory(responseText, continueWith){
 	continueWith && continueWith();
 }
 
-function sendEditedMsg(value, evtObj){
-	var obj = {
-		id: id,
-		text: value
-	};
+function createPage(){
+	serverCheck(appState.cond);
+	if(appState.name.length > 0){
+		updateName();		
+	}
 
-	put(appState.mainUrl + '?token=' + 'TE11EN', JSON.stringify(obj), function(responseText){
-		getHistory(responseText);
-    });
+	var items = document.getElementsByClassName('history')[0];
+	while(items.childNodes[0]){
+		items.removeChild(items.childNodes[0]);
+	}	
+	for(var i = 0; i < appState.messages.length; i++){
+		var msg = appState.messages[i];
+		var userMessage = createMsg(msg);
+		items.appendChild(userMessage);
+	}
+	items.scrollTop = 9999;
+}
+
+function store() {
+	if(typeof(Storage) == "undefined") {
+		alert('localStorage is not accessible');
+		return;
+	}
+	localStorage.clear();
+	localStorage.setItem("Chatting page", JSON.stringify(appState));
+}
+
+function restore(continueWith) {
+	var url =  appState.mainUrl + '?token=';
+	url += (editFlag) ? "TN11EN" : appState.token;
+
+	get(url, function(responseText) {
+		getHistory(responseText, continueWith);
+	});
 }
 
 function updateName(){
@@ -179,21 +230,6 @@ function updateName(){
 	document.getElementById("inputMsgText").style.visibility = "visible";
 	document.getElementById("form1").style.visibility = "hidden";
 	document.getElementById("form2").style.visibility = "visible";
-}
-
-function delegateEvent(evtObj) {
-	if(evtObj.type === 'click'){
-		if (evtObj.target.classList.contains('btn-success') 
-			|| evtObj.target.classList.contains('btn-info'))
-			onInputNameButtonClick(evtObj);
-		else if (evtObj.target.classList.contains('btn-primary')){
-			onSendMsgButtonClick(evtObj);
-		}
-		else if (evtObj.target.classList.contains('btn-default') 
-			|| evtObj.target.classList.contains('glyphicon')){
-			onEditMsgButtonClick(evtObj);
-		}
-	}
 }
 
 function greetingCreation(value){
@@ -266,42 +302,6 @@ function createMsg(msg){
 		userMessage.appendChild(sp);
 	}
 	return userMessage;
-}
-
-function createPage(){
-	serverCheck(appState.cond);
-	if(appState.name.length > 0){
-		updateName();		
-	}
-
-	var items = document.getElementsByClassName('history')[0];
-	while(items.childNodes[0]){
-		items.removeChild(items.childNodes[0]);
-	}	
-	for(var i = 0; i < appState.messages.length; i++){
-		var msg = appState.messages[i];
-		var userMessage = createMsg(msg);
-		items.appendChild(userMessage);
-	}
-	items.scrollTop = 9999;
-}
-
-function store() {
-	if(typeof(Storage) == "undefined") {
-		alert('localStorage is not accessible');
-		return;
-	}
-	localStorage.clear();
-	localStorage.setItem("Chatting page", JSON.stringify(appState));
-}
-
-function restore(continueWith) {
-	var url =  appState.mainUrl + '?token=';
-	url += (editFlag) ? "TN11EN" : appState.token;
-
-	get(url, function(responseText) {
-		getHistory(responseText, continueWith);
-	});
 }
 
 function get(url, continueWith, continueWithError) {
