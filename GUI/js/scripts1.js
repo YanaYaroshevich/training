@@ -9,17 +9,6 @@ var uniqueId = function() {
 	return Math.floor(date * random).toString();
 };
 
-var theMessage = function(msgText, userName) {
-	return {
-		text: msgText,
-		name: userName,
-		date: getDate(),
-		id: uniqueId(),
-		isDeleted: false,
-		isEdited: false
-	};
-};
-
 var appState = {
 				mainUrl : 'http://localhost:999/chat',
 				messages:[],
@@ -30,6 +19,43 @@ var appState = {
 
 function run() {
 	document.addEventListener('click', delegateEvent);
+	
+		/*var url =  appState.mainUrl + "TN11EN";
+
+		setTimeout(
+			function(){
+				get(url, function(responseText) {
+					var response = JSON.parse(responseText);
+					for (var i = 0; i < appState.messages.length; i++){
+						var prevMsg = appState.messages[i];
+						var newMsg = response.messages[i];
+						if(prevMsg.ind == newMsg.ind){
+							if(prevMsg.method != newMsg.method){
+								if (newMsg.method == "DELETE"){
+									var obj = {
+										name: prevMsg.name,
+										date: newMsg.date,
+										method: "DELETE",
+										id: prevMsg.id
+									};
+									appState.messages[i] = obj;
+								}
+								else if (newMsg.method == "PUT"){
+									var obj = {
+										name: prevMsg.name,
+										date: newMsg.date,
+										text: newMsg.text,
+										method: "PUT",
+										id: prevMsg.id
+									};
+								}
+
+							}
+						}
+					}
+				}, 1000); 
+		});*/
+	
 	restore();
 }
 
@@ -75,7 +101,6 @@ function editMsg(id){
 	for (var i = 0; i < appState.messages.length; i++){
 		var msg = appState.messages[i];
 		if(msg.id == id && msg.name == appState.name && !msg.isDeleted){
-			appState.messages[i].isEdited = true;
 			textToChange = msg.text;
 			editFlag = true;
 			break;
@@ -85,6 +110,7 @@ function editMsg(id){
 			break;
 		}
 	}
+
 	var field = document.getElementById("inputMsgText");
 	field.value = textToChange;	
 }
@@ -104,24 +130,18 @@ function sendMsg(value, evtObj){
 	if(!value){
 		return;
 	}
-	var objMsg = theMessage(value, appState.name);
+	var objMsg = {
+		text: value,
+		name: appState.name,
+		date: getDate(),
+		id: uniqueId(),
+	};
 	post(appState.mainUrl, JSON.stringify(objMsg), function(){
 		restore();
 	});
 }
 
 function removeMsg(id){
-	for (var i = 0; i < appState.messages.length; i++){
-		var msg = appState.messages[i];
-		if(msg.id == id && msg.name == appState.name){
-			msg.isDeleted = true;
-			break;
-		}
-		else if (msg.id == id){
-			alert("you can't delete this!");
-		}
-	}
-
 	del(appState.mainUrl, JSON.stringify({id: id}), function(){
 		editFlag = true;
 		restore();
@@ -185,6 +205,24 @@ function getHistory(responseText, continueWith){
 	continueWith && continueWith();
 }
 
+function getIndById(id){
+	for (var i = 0; i < appState.messages.length; i++){
+		if(appState.messages[i].id == id)
+			return i;
+	}
+}
+
+function getMethod(child){
+	if (child.getAttribute("sp")){
+		if(child.getAttribute("sp").getElementsByClassName("glyphicon glyphicon-pencil"))
+			return "PUT";
+		else if (child.getAttribute("sp").getElementsByClassName("glyphicon glyphicon-wrench"))
+			return "DELETE";
+	}
+	else
+		return "POST";
+}
+
 function createPage(){
 	serverCheck(appState.cond);
 	if(appState.name.length > 0){
@@ -192,14 +230,49 @@ function createPage(){
 	}
 
 	var items = document.getElementsByClassName('history')[0];
-	while(items.childNodes[0]){
+
+	for(var i = 0; i < items.childNodes.length; i++){
+		var prevMsg = items.childNodes[i];
+		var newMsg = appState.messages[getIndById(prevMsg.id)];
+		if(getMethod(prevMsg) != newMsg.method){
+			if (newMsg.method == "DELETE"){
+				var obj = {
+					name: prevMsg.getElementsByClassName("userName")[0].textContent,
+					id: prevMsg.getAttribute("id"),
+					method: "DELETE",
+					date: newMsg.date
+				};
+				var msg = createMsg(obj);
+				items.replaceChild(msg, items.childNodes[i]);
+			}
+			else if (newMsg.method == "PUT"){
+				var obj = {
+					name: prevMsg.getElementsByClassName("userName")[0].textContent,
+					id: prevMsg.getAttribute("id"),
+					method: "PUT",
+					date: newMsg.date,
+					text: newMsg.text
+				};
+				var msg = createMsg(obj);
+				items.replaceChild(msg, items.childNodes[i]);
+			}
+		}
+	}
+
+	for (var i = items.childNodes.length; i < appState.messages.length; i++){
+		var msg = appState.messages[i];
+		var userMessage = createMsg(msg);
+		items.appendChild(userMessage);
+	}
+	/*while(items.childNodes[0]){
 		items.removeChild(items.childNodes[0]);
 	}	
 	for(var i = 0; i < appState.messages.length; i++){
 		var msg = appState.messages[i];
 		var userMessage = createMsg(msg);
 		items.appendChild(userMessage);
-	}
+	}*/
+
 	items.scrollTop = 9999;
 }
 
@@ -278,8 +351,8 @@ function createMsg(msg){
 	date.innerHTML = msg.date;
 	userMessage.appendChild(date);
 
-	if(!msg.isDeleted){
-		if(msg.isEdited){
+	if(msg.method != "DELETE"){
+		if(msg.method == "PUT"){
 			var sp = iconCreation("glyphicon glyphicon-pencil", '#ff0000');
 			userMessage.appendChild(sp);
 		}
