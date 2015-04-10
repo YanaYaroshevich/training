@@ -2,6 +2,7 @@
 
 var editFlag = false;
 var id = -1;
+var page = null;
 
 var uniqueId = function() {
 	var date = Date.now();
@@ -18,8 +19,6 @@ var theMessage = function(msgText, userName) {
 		id: uniqueId()
 	};
 };
-
-var page = null;
 
 function run(){
 	document.addEventListener('click', delegateEvent);

@@ -44,7 +44,7 @@ public class Server implements HttpHandler {
                 Integer port = Integer.parseInt(args[0]);
                 HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
                 System.out.println("Server started.");
-                String serverHost = InetAddress.getLocalHost().getHostAddress();
+                //String serverHost = InetAddress.getLocalHost().getHostAddress();
                 server.createContext("/chat", new Server());
                 server.setExecutor(null);
                 server.start();
@@ -54,6 +54,7 @@ public class Server implements HttpHandler {
         }
     }
 
+    @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         d = new Date();
         out.println(d.toLocaleString() + " request begin");
@@ -62,12 +63,13 @@ public class Server implements HttpHandler {
         String response = "";
 
         if ("GET".equals(httpExchange.getRequestMethod())) {
-            response = doGet(httpExchange);    
+            response = doGet(httpExchange);
         } else if ("POST".equals(httpExchange.getRequestMethod())) {
             doPost(httpExchange);
-        } else if ("DELETE".equals(httpExchange.getRequestMethod()) || "PUT".equals(httpExchange.getRequestMethod())) {
+        } else if ("PUT".equals(httpExchange.getRequestMethod()) || "DELETE".equals(httpExchange.getRequestMethod())) {
             doPutOrDelete(httpExchange);
-            response = doGet(httpExchange);
+            if ("PUT".equals(httpExchange.getRequestMethod()))
+                response = doGet(httpExchange);
         } else if ("OPTIONS".equals(httpExchange.getRequestMethod())) {
             response = "";
         }
@@ -129,12 +131,12 @@ public class Server implements HttpHandler {
 
     private void doPutOrDelete(HttpExchange httpExchange){
         try{
-            JSONObject newMsg = new JSONObject();
+            JSONObject newMsg;
             JSONObject newParams = messageExchange.getClientMessage(httpExchange.getRequestBody());
             for (Iterator <JSONObject> it = history.iterator(); it.hasNext();){
                 newMsg = it.next();
                 if (newMsg.get("id").equals(newParams.get("id"))){
-                    newMsg.put("date", Calendar.getInstance().getTimeZone().getDisplayName());
+                    newMsg.put("date", (new Date().toLocaleString()));
                     if ("DELETE".equals(httpExchange.getRequestMethod())){
                         newMsg.put("text", "'is deleted'");
                         newMsg.put("isDeleted", true);
@@ -145,6 +147,7 @@ public class Server implements HttpHandler {
                     }
                 }
             }
+            System.out.println(history);
         }
         catch(ParseException e){
             System.err.println("Invalid user message: " + httpExchange.getRequestBody() + " " + e.getMessage());

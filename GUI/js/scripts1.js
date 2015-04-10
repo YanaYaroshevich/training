@@ -96,12 +96,10 @@ function removeMsg(id){
 			alert("you can't delete this!");
 		}
 	}
-	
-	var obj = {
-		id: id,
-	};
 
-	del(appState.mainUrl + '?token=' + 'TE11EN', JSON.stringify(obj), function(responseText){
+	del(appState.mainUrl, JSON.stringify({id: id}), function(){
+		editFlag = true;
+		restore();
 		createPage();
     });
 }
@@ -298,7 +296,8 @@ function store() {
 }
 
 function restore(continueWith) {
-	var url = appState.mainUrl + '?token=' + appState.token;
+	var url =  appState.mainUrl + '?token=';
+	url += (editFlag) ? "TN11EN" : appState.token;
 
 	get(url, function(responseText) {
 		getHistory(responseText, continueWith);
