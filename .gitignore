@@ -34,3 +34,5 @@ test-reports
 *.iml
 *.ipr
 *.iws
+
+WebServer/out/*
