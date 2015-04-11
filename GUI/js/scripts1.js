@@ -1,7 +1,7 @@
 'use strict'
 
-var editFlag = false;
 var id = -1;
+var editFlag = false;
 
 var uniqueId = function() {
 	var date = Date.now();
@@ -19,44 +19,64 @@ var appState = {
 
 function run() {
 	document.addEventListener('click', delegateEvent);
-	
-		/*var url =  appState.mainUrl + "TN11EN";
-
-		setTimeout(
-			function(){
-				get(url, function(responseText) {
-					var response = JSON.parse(responseText);
-					for (var i = 0; i < appState.messages.length; i++){
-						var prevMsg = appState.messages[i];
-						var newMsg = response.messages[i];
-						if(prevMsg.ind == newMsg.ind){
-							if(prevMsg.method != newMsg.method){
-								if (newMsg.method == "DELETE"){
-									var obj = {
-										name: prevMsg.name,
-										date: newMsg.date,
-										method: "DELETE",
-										id: prevMsg.id
-									};
-									appState.messages[i] = obj;
-								}
-								else if (newMsg.method == "PUT"){
-									var obj = {
-										name: prevMsg.name,
-										date: newMsg.date,
-										text: newMsg.text,
-										method: "PUT",
-										id: prevMsg.id
-									};
-								}
-
-							}
-						}
-					}
-				}, 1000); 
-		});*/
-	
 	restore();
+}
+
+function restore(continueWith) {
+	var url =  appState.mainUrl + '?token=' + appState.token;
+
+	get(url, function(responseText) {
+		getHistory(responseText, function(){
+			setTimeout(function(){restore();}, 1000);
+		});
+	});
+}
+
+function getHistory(responseText, continueWith){
+	console.assert(responseText != null);
+
+	var response = JSON.parse(responseText);
+
+	appState.token = response.token;
+
+	for (var i = 0; i < response.messages.length; i++){
+		var j = getIndById(response.messages[i].id);
+		if (j != -1)
+			appState.messages[j] = response.messages[i];
+		else
+			appState.messages.push(response.messages[i]);
+	}
+
+	if(typeof(Storage) == "undefined") {
+		alert('localStorage is not accessible');
+		return;
+	}
+	var item = JSON.parse(localStorage.getItem("Chatting page"));
+	appState.name = item.name;
+		
+	createPage();
+		
+	continueWith && continueWith();
+}
+
+function createPage(){
+	serverCheck(appState.cond);
+	if(appState.name.length > 0){
+		updateName();		
+	}
+
+	var items = document.getElementsByClassName('history')[0];
+
+	while(items.childNodes[0]){
+		items.removeChild(items.childNodes[0]);
+	}	
+	for(var i = 0; i < appState.messages.length; i++){
+		var msg = appState.messages[i];
+		var userMessage = createMsg(msg);
+		items.appendChild(userMessage);
+	}
+
+	items.scrollTop = 9999;
 }
 
 function delegateEvent(evtObj) {
@@ -121,8 +141,8 @@ function sendEditedMsg(value, evtObj){
 		text: value
 	};
 
-	put(appState.mainUrl + '?token=' + 'TE11EN', JSON.stringify(obj), function(responseText){
-		getHistory(responseText);
+	put(appState.mainUrl, JSON.stringify(obj), function(responseText){
+		console.log("PUT successful");
     });
 }
 
@@ -137,15 +157,13 @@ function sendMsg(value, evtObj){
 		id: uniqueId(),
 	};
 	post(appState.mainUrl, JSON.stringify(objMsg), function(){
-		restore();
+		console.log("POST successful");
 	});
 }
 
 function removeMsg(id){
 	del(appState.mainUrl, JSON.stringify({id: id}), function(){
-		editFlag = true;
-		restore();
-		createPage();
+		console.log("DELETE successful");
     });
 }
 
@@ -179,101 +197,12 @@ function setName(value){
 	appState.name = value;
 }
 
-function getHistory(responseText, continueWith){
-	console.assert(responseText != null);
-
-	var response = JSON.parse(responseText);
-
-	appState.token = response.token;
-
-	if (editFlag){
-		appState.messages = response.messages;
-		editFlag = false;
-	}
-	else
-		appState.messages = appState.messages.concat(response.messages);
-	
-	if(typeof(Storage) == "undefined") {
-		alert('localStorage is not accessible');
-		return;
-	}
-	var item = JSON.parse(localStorage.getItem("Chatting page"));
-	appState.name = item.name;
-		
-	createPage();
-		
-	continueWith && continueWith();
-}
-
 function getIndById(id){
 	for (var i = 0; i < appState.messages.length; i++){
 		if(appState.messages[i].id == id)
 			return i;
 	}
-}
-
-function getMethod(child){
-	if (child.getAttribute("sp")){
-		if(child.getAttribute("sp").getElementsByClassName("glyphicon glyphicon-pencil"))
-			return "PUT";
-		else if (child.getAttribute("sp").getElementsByClassName("glyphicon glyphicon-wrench"))
-			return "DELETE";
-	}
-	else
-		return "POST";
-}
-
-function createPage(){
-	serverCheck(appState.cond);
-	if(appState.name.length > 0){
-		updateName();		
-	}
-
-	var items = document.getElementsByClassName('history')[0];
-
-	for(var i = 0; i < items.childNodes.length; i++){
-		var prevMsg = items.childNodes[i];
-		var newMsg = appState.messages[getIndById(prevMsg.id)];
-		if(getMethod(prevMsg) != newMsg.method){
-			if (newMsg.method == "DELETE"){
-				var obj = {
-					name: prevMsg.getElementsByClassName("userName")[0].textContent,
-					id: prevMsg.getAttribute("id"),
-					method: "DELETE",
-					date: newMsg.date
-				};
-				var msg = createMsg(obj);
-				items.replaceChild(msg, items.childNodes[i]);
-			}
-			else if (newMsg.method == "PUT"){
-				var obj = {
-					name: prevMsg.getElementsByClassName("userName")[0].textContent,
-					id: prevMsg.getAttribute("id"),
-					method: "PUT",
-					date: newMsg.date,
-					text: newMsg.text
-				};
-				var msg = createMsg(obj);
-				items.replaceChild(msg, items.childNodes[i]);
-			}
-		}
-	}
-
-	for (var i = items.childNodes.length; i < appState.messages.length; i++){
-		var msg = appState.messages[i];
-		var userMessage = createMsg(msg);
-		items.appendChild(userMessage);
-	}
-	/*while(items.childNodes[0]){
-		items.removeChild(items.childNodes[0]);
-	}	
-	for(var i = 0; i < appState.messages.length; i++){
-		var msg = appState.messages[i];
-		var userMessage = createMsg(msg);
-		items.appendChild(userMessage);
-	}*/
-
-	items.scrollTop = 9999;
+	return -1;
 }
 
 function store() {
@@ -283,15 +212,6 @@ function store() {
 	}
 	localStorage.clear();
 	localStorage.setItem("Chatting page", JSON.stringify(appState));
-}
-
-function restore(continueWith) {
-	var url =  appState.mainUrl + '?token=';
-	url += (editFlag) ? "TN11EN" : appState.token;
-
-	get(url, function(responseText) {
-		getHistory(responseText, continueWith);
-	});
 }
 
 function updateName(){
@@ -342,7 +262,7 @@ function btnCreation(btnClass){
 function createMsg(msg){
 	var userMessage = childCreation("userMessage", 'div');
 	setAttr(userMessage, 'id', msg.id);
-
+	
 	var userName = childCreation("userName", 'div');
 	userName.innerHTML = msg.name;
 	userMessage.appendChild(userName);
@@ -351,8 +271,14 @@ function createMsg(msg){
 	date.innerHTML = msg.date;
 	userMessage.appendChild(date);
 
-	if(msg.method != "DELETE"){
-		if(msg.method == "PUT"){
+	if (msg.method == "DELETE"){
+		var sp = iconCreation("glyphicon glyphicon-trash", '#ff0000');
+		userMessage.appendChild(sp);
+	}
+
+	else{
+		
+		if (msg.method == "PUT"){
 			var sp = iconCreation("glyphicon glyphicon-pencil", '#ff0000');
 			userMessage.appendChild(sp);
 		}
@@ -360,7 +286,6 @@ function createMsg(msg){
 		var text = childCreation("text", 'pre');
 		text.innerHTML = msg.text;
 		userMessage.appendChild(text);
-
 		
 		if(msg.name == appState.name){
 			var delBtn = btnCreation("glyphicon glyphicon-pencil", '#003264');
@@ -368,11 +293,6 @@ function createMsg(msg){
 			userMessage.appendChild(delBtn);
 			userMessage.appendChild(editBtn);
 		}
-	}
-
-	else{
-		var sp = iconCreation("glyphicon glyphicon-trash", '#ff0000');
-		userMessage.appendChild(sp);
 	}
 	return userMessage;
 }

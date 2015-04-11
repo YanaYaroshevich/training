@@ -3,12 +3,20 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
+import java.text.DateFormat;
 import java.util.List;
 import java.util.Date;
 import java.util.Random;
+import java.util.TimeZone;
 
 public class MessageExchange {
     private JSONParser jsonParser = new JSONParser();
+    private DateFormat formatter;
+
+    public MessageExchange(){
+        this.formatter = DateFormat.getDateTimeInstance();
+        this.formatter.setTimeZone(TimeZone.getTimeZone("Europe/Minsk"));
+    }
 
     public String getToken(int index) {
         Integer number = index * 8 + 11;
@@ -34,12 +42,11 @@ public class MessageExchange {
 
     public String getClientSendMessageRequest(String text, String name) {
         JSONObject jsonObject = new JSONObject();
+        jsonObject.put("date", formatter.format(new Date()));
         jsonObject.put("text", text);
         jsonObject.put("name", name);
         jsonObject.put("id", getUniqueId());
-        jsonObject.put("date", (new Date()).toLocaleString());
-        jsonObject.put("isDeleted", false);
-        jsonObject.put("isEdited", false);
+        jsonObject.put("method", "POST");
         return jsonObject.toJSONString();
     }
 
