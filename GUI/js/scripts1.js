@@ -106,6 +106,7 @@ function onInputNameButtonClick(evtObj){
 function onSendMsgButtonClick(evtObj){
 	var textField = document.getElementById('inputMsgText');
 	(editFlag) ? sendEditedMsg(textField.value, evtObj) : sendMsg(textField.value, evtObj);
+	editFlag = false;
 	textField.value = '';
 }
 
