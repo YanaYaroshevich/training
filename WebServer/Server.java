@@ -4,9 +4,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,7 +27,7 @@ import com.sun.net.httpserver.HttpServer;
 
 public class Server implements HttpHandler {
 	private DateFormat formatter;
-	private List<JSONObject> history = new ArrayList<>();
+	private List<JSONObject> history = new ArrayList<JSONObject>();
 	private MessageExchange messageExchange = new MessageExchange();
 	private JSONParser jsonParser = new JSONParser();
 	private PrintWriter out;
@@ -45,6 +47,7 @@ public class Server implements HttpHandler {
                 Integer port = Integer.parseInt(args[0]);
                 HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
                 System.out.println("Server started.");
+                //String serverHost = InetAddress.getLocalHost().getHostAddress();
                 server.createContext("/chat", new Server());
                 server.setExecutor(null);
                 server.start();
@@ -56,7 +59,8 @@ public class Server implements HttpHandler {
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        out.println(formatter.format(new Date()) + " request begin");
+    	String start = formatter.format(new Date());
+        out.println(start + " request begin");
         out.flush();
 
         String response = "";
@@ -131,7 +135,7 @@ public class Server implements HttpHandler {
             for (Iterator <JSONObject> it = history.iterator(); it.hasNext();){
                 newMsg = it.next();
                 if (newMsg.get("id").equals(newParams.get("id"))){
-                    newMsg.put("date", formatter.format(new Date()));
+                    newMsg.put("date", (new Date().toLocaleString()));
                     if ("DELETE".equals(httpExchange.getRequestMethod())){
                         newMsg.put("text", "'is deleted'");
                         newMsg.put("isDeleted", true);
